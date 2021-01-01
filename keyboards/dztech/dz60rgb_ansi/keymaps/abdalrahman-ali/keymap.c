@@ -1,5 +1,41 @@
 #include QMK_KEYBOARD_H
 
+/*{ Custom keycodes */
+
+enum custom_keycodes {
+        MT_TMUXPRE = SAFE_RANGE
+};
+#define TMUX_PRE CTL_T(MT_TMUXPRE)
+
+/*}*/
+/*{ process record user */
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) 
+{
+    switch (keycode) 
+    {
+        // sends tmux prefix of tap, that is lctl(kc_spc)
+      	// tap_code16 sends advanced keycodes. the 16 bit version of the `tap_code` function is used here.
+       	case TMUX_PRE:
+  			if (record->tap.count > 0) 
+  			{
+    			if (record->event.pressed) 
+      				tap_code16(LCTL(KC_SPC));
+
+    			// do not continue with default tap action
+    			// if the MT was pressed or released, but not held
+    			return false;
+  			}
+			break;
+        default:
+            return true; // Process all other keycodes normally
+    }
+    return true;
+}
+
+/*}*/
+/*{ Home row mods */
+
 // Left-hand home row mods
 #define GUI_A LGUI_T(KC_A)
 #define ALT_S LALT_T(KC_S)
@@ -12,13 +48,15 @@
 #define ALT_L LALT_T(KC_L)
 #define GUI_SCLN RGUI_T(KC_SCLN)
 
+/*}*/
+/*{ Layout */
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT_60_ansi(
         KC_GESC,        KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC,
         KC_TAB,         KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS,
-        CTL_T(KC_CAPS), KC_A,    ALT_S,   CTL_D,   SFT_F,   KC_G,    KC_H,    SFT_J,   CTL_K,   KC_L,   KC_SCLN, KC_QUOT,          KC_ENT,
+      CTL_T(TMUX_PRE), GUI_A,   ALT_S,   CTL_D,   SFT_F,   KC_G,    KC_H,    SFT_J,   CTL_K,   ALT_L,   GUI_SCLN,KC_QUOT,          KC_ENT,
         KC_LSFT,                 KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,          KC_RSFT,
-        KC_LCTL,        KC_LGUI, KC_LALT,                            KC_SPC,                             KC_RALT, MO(2),   KC_RCTL,   MO(1)
+        KC_LCTL,        KC_LGUI, KC_LALT,                            KC_SPC,                             KC_RALT, MO(2),   KC_RCTL,   TT(1)
     ),
     [1] = LAYOUT_60_ansi(
         KC_GESC, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_DEL,
@@ -30,8 +68,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [2] = LAYOUT_60_ansi(
         _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_DEL,
         _______, RGB_TOG, _______, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, RGB_MOD, _______, _______, _______, RESET,
-        _______, _______, _______, _______, _______, _______, _______, _______, RGB_SPI, RGB_SPD, _______, _______,          _______,
+        KC_CAPS, _______, _______, _______, _______, _______, _______, _______, RGB_SPI, RGB_SPD, _______, _______,          _______,
         _______,          _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,
         _______, _______, _______,                            _______,                            _______, _______, _______, _______
     )
 };
+/*}*/
+
+// vim: foldmethod=marker
