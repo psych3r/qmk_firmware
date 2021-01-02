@@ -288,6 +288,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
     switch (keycode) {
         case KC_LSHIFT:
+        case KC_RSHIFT:
             shifted = record->event.pressed;
             return false;
         case KC_1 ... KC_0:
