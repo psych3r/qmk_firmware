@@ -2,6 +2,8 @@
 // Configure the global tapping term (default: 200ms)
 #define TAPPING_TERM 200
 
+#define TAPPING_TERM_PER_KEY
+
 // enable if fast tap modding inserts two tapped keys, refer to docs
 //#define PERMISSIVE_HOLD
 
