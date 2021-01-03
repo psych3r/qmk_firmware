@@ -194,9 +194,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case GUI_A:
-            return TAPPING_TERM + 1000;
+            return TAPPING_TERM + 50; break;
         case ALT_S:
-            return TAPPING_TERM + 1000;
+            return TAPPING_TERM + 50; break;
+        case CTL_D:
+            return TAPPING_TERM + 50; break;
         default:
             return TAPPING_TERM;
     }
