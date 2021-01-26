@@ -211,7 +211,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case GUI_A:
             return TAPPING_TERM + 50; break;
         case ALT_S:
-            return TAPPING_TERM + 75; break;
+            return TAPPING_TERM + 85; break;
         case CTL_D:
             return TAPPING_TERM + 50; break;
         default:
