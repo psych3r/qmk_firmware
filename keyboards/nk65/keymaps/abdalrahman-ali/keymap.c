@@ -15,13 +15,19 @@
  */
 #include QMK_KEYBOARD_H
 
+/*{  matrix init and scan*/
+void matrix_init_user(void) {
+  //user initialization
+}
+void matrix_scan_user(void) {
+  //user matrix
+}
+/*}*/
 /*{ for complex tap dancing */
-
 typedef struct {
     bool is_press_action;
     uint8_t state;
 } tap;
-
 enum {
     SINGLE_TAP = 1,
     SINGLE_HOLD,
@@ -31,25 +37,19 @@ enum {
     TRIPLE_TAP,
     TRIPLE_HOLD
 };
-
 /*}*/
-
 /*{ Custom keycodes */
-
 // custom KCs enum
 enum custom_keycodes {
     MT_TMUXPRE = SAFE_RANGE
 };
 #define TMUX_PRE CTL_T(MT_TMUXPRE)
-
 // tap dance enum
 enum tap_dance_keys {
     TD_CLN = 1,
     TD_TERMINATOR
 };
-
 /*}*/
-
 /*{ custom tap dance functions */
 void dance_cln_finished(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
@@ -58,7 +58,6 @@ void dance_cln_finished(qk_tap_dance_state_t *state, void *user_data) {
         register_code16(KC_COLN);
     }
 }
-
 void dance_cln_reset(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
         unregister_code(KC_SCLN);
@@ -152,7 +151,6 @@ void x_reset(qk_tap_dance_state_t *state, void *user_data) {
 }
 
 /*}*/
-
 /*{ tap dance actions array */
 
 // All tap dance functions would go here.
@@ -161,7 +159,6 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_TERMINATOR]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, x_finished, x_reset)
 };
 
-/*}*/
 /*}*/
 /*{ process record user */
 
@@ -189,7 +186,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 }
 
 /*}*/
-/*{ Home row mods */
+/*{ Key aliases */
 
 // Left-hand home row mods
 #define GUI_A LGUI_T(KC_A)
@@ -203,9 +200,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #define ALT_L LALT_T(KC_L)
 #define GUI_SCLN RGUI_T(KC_SCLN)
 
+// Tmux, hjkl and mods
+#define TMUX CTL_T(TMUX_PRE)
+#define HJKL LT(2, KC_W)
+#define MODS LT(3, KC_Q)
 /*}  */
-
-
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case GUI_A:
@@ -214,17 +213,19 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return TAPPING_TERM + 85; break;
         case CTL_D:
             return TAPPING_TERM + 50; break;
+        case SFT_F:
+            return TAPPING_TERM - 10; break;
         default:
             return TAPPING_TERM;
     }
 }
-
+/*{ LAYERS  */
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [0] = LAYOUT_65_ansi( /* Base */
         KC_GESC, KC_1,    KC_2,   KC_3,   KC_4,   KC_5,   KC_6,   KC_7,   KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC, KC_DEL,\
-        KC_TAB,  KC_Q,LT(2, KC_W),KC_E,   KC_R,   KC_T,   KC_Y,   KC_U,   KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS, KC_HOME,\
-CTL_T(TMUX_PRE), GUI_A,   ALT_S,  CTL_D,  SFT_F,  KC_G,   KC_H,   SFT_J,  CTL_K,   ALT_L,   KC_SCLN, KC_QUOT,          KC_ENT,  KC_END,\
-        KC_LSFT, KC_Z,    KC_X,   KC_C,   KC_V,   KC_B,   KC_N,   KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,          KC_UP,   MO(2), \
+        KC_TAB,  MODS,    HJKL,   KC_E,   KC_R,   KC_T,   KC_Y,   KC_U,   KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS, KC_HOME,\
+        TMUX,    GUI_A,   ALT_S,  CTL_D,  SFT_F,  KC_G,   KC_H,   SFT_J,  CTL_K,   ALT_L,   KC_SCLN, KC_QUOT,          KC_ENT,  KC_END,\
+        KC_LSFT, KC_Z,    KC_X,   KC_C,   KC_V,   KC_B,   KC_N,   KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,          KC_UP,   TT(2), \
         KC_LCTL, KC_LGUI, KC_LALT,                KC_SPC,                TD(TD_TERMINATOR), TT(1),   KC_RCTL, KC_LEFT, KC_DOWN, KC_RGHT),
 
 [1] = LAYOUT_65_ansi( /* FN */
@@ -235,25 +236,24 @@ CTL_T(TMUX_PRE), GUI_A,   ALT_S,  CTL_D,  SFT_F,  KC_G,   KC_H,   SFT_J,  CTL_K,
     KC_TRNS, KC_TRNS, KC_TRNS,                KC_TRNS,                               KC_TRNS, KC_TRNS, KC_TRNS, KC_MPRV, KC_VOLD, KC_MNXT),
 
 [2] = LAYOUT_65_ansi( /* Empty for dynamic keymaps */
-    KC_PWR,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, EEP_RST, RESET,\
-    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_PGUP,\
-    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, KC_TRNS, KC_TRNS,          KC_TRNS, KC_PGDN,\
-    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,          KC_VOLU, KC_TRNS,\
-    KC_TRNS, KC_TRNS, KC_TRNS,                KC_TRNS,                               KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_VOLD, DF(3)),
+        KC_PWR,  KC_7, KC_8,   KC_9,   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSPC, KC_DEL,\
+        KC_TAB,  KC_4, KC_5,   KC_6,   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSLS, KC_PGUP,\
+        TMUX,    KC_1, KC_2,   KC_3,   KC_TRNS, KC_TRNS, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,KC_ENT,  KC_TRNS,          KC_ENT,  KC_PGDN,\
+        KC_LSFT, KC_0, KC_DOT, KC_ENT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_RSFT,          KC_VOLU, KC_TRNS,\
+        KC_LCTL, KC_LGUI, KC_LALT,           KC_TRNS,                               KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_VOLD, DF(4)),
 
-[3] = LAYOUT_65_ansi( /* Base */
+[3] = LAYOUT_65_ansi( /* Empty for dynamic keymaps */
+        KC_PWR,  KC_7, KC_8,   KC_9,   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSPC, KC_DEL,\
+        KC_TAB,  KC_4, KC_5,   KC_6,   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSLS, KC_PGUP,\
+        TMUX,    KC_1, KC_2,   KC_3,   KC_TRNS, KC_TRNS, KC_HOME, KC_BSPC, KC_DEL,  KC_END,  KC_ENT,  KC_TRNS,          KC_ENT,  KC_PGDN,\
+        KC_LSFT, KC_0, KC_DOT, KC_ENT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_RSFT,          KC_VOLU, KC_TRNS,\
+        KC_LCTL, KC_LGUI, KC_LALT,           KC_TRNS,                               KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_VOLD, KC_TRNS),
+
+[4] = LAYOUT_65_ansi( /* Gaming Layer */
         KC_GESC, KC_1,    KC_2,   KC_3,   KC_4,   KC_5,   KC_6,   KC_7,   KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC, KC_DEL,\
         KC_TAB,  KC_Q,    KC_W,   KC_E,   KC_R,   KC_T,   KC_Y,   KC_U,   KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS, KC_HOME,\
         KC_CAPS, KC_A,    KC_S,   KC_D,   KC_F,   KC_G,   KC_H,   KC_J,   KC_K,    KC_L,    KC_SCLN, KC_QUOT,          KC_ENT,  KC_END,\
         KC_LSFT, KC_Z,    KC_X,   KC_C,   KC_V,   KC_B,   KC_N,   KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,          KC_UP,   DF(0), \
         KC_LCTL, KC_LGUI, KC_LALT,                KC_SPC,                KC_RALT, TT(1),   KC_RCTL, KC_LEFT, KC_DOWN, KC_RGHT),
-
 };
-
-void matrix_init_user(void) {
-  //user initialization
-}
-
-void matrix_scan_user(void) {
-  //user matrix
-}
+/*}*/
