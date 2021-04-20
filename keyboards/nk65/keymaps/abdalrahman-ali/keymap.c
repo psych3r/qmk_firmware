@@ -14,6 +14,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include QMK_KEYBOARD_H
+//#include "nk65.h"
+//#include "drivers/issi/is31fl3733.h"
 
 /*{  matrix init and scan*/
 void matrix_init_user(void) {
@@ -202,8 +204,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
 // Tmux, hjkl and mods
 #define TMUX CTL_T(TMUX_PRE)
-#define HJKL LT(2, KC_W)
-#define MODS LT(3, KC_Q)
+#define HJKL LT(3, KC_W)
+#define MODS LT(4, KC_Q)
+//#define XXX KC_TRNS
 /*}  */
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
@@ -225,35 +228,36 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_GESC, KC_1,    KC_2,   KC_3,   KC_4,   KC_5,   KC_6,   KC_7,   KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC, KC_DEL,\
         KC_TAB,  MODS,    HJKL,   KC_E,   KC_R,   KC_T,   KC_Y,   KC_U,   KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS, KC_HOME,\
         TMUX,    GUI_A,   ALT_S,  CTL_D,  SFT_F,  KC_G,   KC_H,   SFT_J,  CTL_K,   ALT_L,   KC_SCLN, KC_QUOT,          KC_ENT,  KC_END,\
-        KC_LSFT, KC_Z,    KC_X,   KC_C,   KC_V,   KC_B,   KC_N,   KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,          KC_UP,   TT(2), \
-        KC_LCTL, KC_LGUI, KC_LALT,                KC_SPC,                TD(TD_TERMINATOR), TT(1),   KC_RCTL, KC_LEFT, KC_DOWN, KC_RGHT),
+        KC_LSFT, KC_Z,    KC_X,   KC_C,   KC_V,   KC_B,   KC_N,   KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,          KC_UP,   TT(3), \
+        KC_LCTL, KC_LGUI, KC_LALT,                KC_SPC,                TD(TD_TERMINATOR), TT(2),   KC_RCTL, KC_LEFT, KC_DOWN, KC_RGHT),
 
-[1] = LAYOUT_65_ansi( /* FN */
-    KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_DEL,  KC_TRNS,\
-    KC_TRNS, S1_DEC,  S1_INC,  S2_DEC,  S2_INC,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_PGUP,\
-    KC_CAPS, EF_DEC,  EF_INC,  H1_DEC,  H1_INC,  H2_DEC,  H2_INC,  BR_DEC,  BR_INC,  ES_DEC,  ES_INC,  KC_TRNS,          KC_TRNS, KC_PGDN,\
-    KC_TRNS, KC_VOLD, KC_VOLU, KC_MUTE, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,          KC_VOLU, KC_MUTE,\
-    KC_TRNS, KC_TRNS, KC_TRNS,                KC_TRNS,                               KC_TRNS, KC_TRNS, KC_TRNS, KC_MPRV, KC_VOLD, KC_MNXT),
-
-[2] = LAYOUT_65_ansi( /* Empty for dynamic keymaps */
-        KC_PWR,  KC_7, KC_8,   KC_9,   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSPC, KC_DEL,\
-        KC_TAB,  KC_4, KC_5,   KC_6,   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSLS, KC_PGUP,\
-        TMUX,    KC_1, KC_2,   KC_3,   KC_TRNS, KC_TRNS, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,KC_ENT,  KC_TRNS,          KC_ENT,  KC_PGDN,\
-        KC_LSFT, KC_0, KC_DOT, KC_ENT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_RSFT,          KC_VOLU, KC_TRNS,\
-        KC_LCTL, KC_LGUI, KC_LALT,           KC_TRNS,                               KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_VOLD, DF(4)),
-
-[3] = LAYOUT_65_ansi( /* Empty for dynamic keymaps */
-        KC_PWR,  KC_7, KC_8,   KC_9,   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSPC, KC_DEL,\
-        KC_TAB,  KC_4, KC_5,   KC_6,   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSLS, KC_PGUP,\
-        TMUX,    KC_1, KC_2,   KC_3,   KC_TRNS, KC_TRNS, KC_HOME, KC_BSPC, KC_DEL,  KC_END,  KC_ENT,  KC_TRNS,          KC_ENT,  KC_PGDN,\
-        KC_LSFT, KC_0, KC_DOT, KC_ENT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_RSFT,          KC_VOLU, KC_TRNS,\
-        KC_LCTL, KC_LGUI, KC_LALT,           KC_TRNS,                               KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_VOLD, KC_TRNS),
-
-[4] = LAYOUT_65_ansi( /* Gaming Layer */
+[1] = LAYOUT_65_ansi( /* Gaming Layer */
         KC_GESC, KC_1,    KC_2,   KC_3,   KC_4,   KC_5,   KC_6,   KC_7,   KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC, KC_DEL,\
         KC_TAB,  KC_Q,    KC_W,   KC_E,   KC_R,   KC_T,   KC_Y,   KC_U,   KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS, KC_HOME,\
         KC_CAPS, KC_A,    KC_S,   KC_D,   KC_F,   KC_G,   KC_H,   KC_J,   KC_K,    KC_L,    KC_SCLN, KC_QUOT,          KC_ENT,  KC_END,\
         KC_LSFT, KC_Z,    KC_X,   KC_C,   KC_V,   KC_B,   KC_N,   KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,          KC_UP,   DF(0), \
-        KC_LCTL, KC_LGUI, KC_LALT,                KC_SPC,                KC_RALT, TT(1),   KC_RCTL, KC_LEFT, KC_DOWN, KC_RGHT),
+        KC_LCTL, KC_LGUI, KC_LALT,                KC_SPC,                          KC_RALT, TT(2),   KC_RCTL, KC_LEFT, KC_DOWN, KC_RGHT),
+
+[2] = LAYOUT_65_ansi( /* RGB and VOL layer */
+        KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_DEL,  KC_TRNS,\
+        KC_TRNS, S1_DEC,  S1_INC,  S2_DEC,  S2_INC,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_PGUP,\
+        KC_CAPS, EF_DEC,  EF_INC,  H1_DEC,  H1_INC,  H2_DEC,  H2_INC,  BR_DEC,  BR_INC,  ES_DEC,  ES_INC,  KC_TRNS,          KC_TRNS, KC_PGDN,\
+        KC_TRNS, KC_VOLD, KC_VOLU, KC_MUTE, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,          KC_VOLU, KC_MUTE,\
+        KC_TRNS, KC_TRNS, KC_TRNS,                   KC_TRNS,                            KC_TRNS, KC_TRNS, KC_TRNS, KC_MPRV, KC_VOLD, KC_MNXT),
+
+[3] = LAYOUT_65_ansi( /* HJKL layer */
+        KC_PWR,  KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSPC, KC_DEL,\
+        KC_TAB,  KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSLS, KC_PGUP,\
+        TMUX,    KC_LEFT, KC_RIGHT, KC_UP,   KC_DOWN, KC_TRNS, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,KC_ENT,  KC_TRNS,          KC_ENT,  KC_PGDN,\
+        KC_LSFT, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_RSFT,          KC_VOLU, KC_TRNS,\
+        KC_LCTL, KC_LGUI, KC_LALT,           KC_TRNS,                                     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_VOLD, DF(1)),
+
+[4] = LAYOUT_65_ansi( /* MODS layer */
+        KC_PWR,  KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSPC, KC_DEL,\
+        KC_TAB,  KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSLS, KC_PGUP,\
+        TMUX,    KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_HOME, KC_BSPC, KC_DEL,  KC_END,  KC_ENT,  KC_TRNS,          KC_ENT,  KC_PGDN,\
+        KC_LSFT, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_RSFT,          KC_VOLU, KC_TRNS,\
+        KC_LCTL, KC_LGUI, KC_LALT,           KC_TRNS,                                     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_VOLD, KC_TRNS),
+
 };
 /*}*/
