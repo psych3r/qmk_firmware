@@ -208,7 +208,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #define MODS LT(4, KC_Q)
 //#define XXX KC_TRNS
 /*}  */
-uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+/*{ Tapping term */
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) 
+{
     switch (keycode) {
         case GUI_A:
             return TAPPING_TERM + 65; break;
@@ -222,6 +224,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return TAPPING_TERM;
     }
 }
+/*}  */
 /*{ LAYERS  */
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [0] = LAYOUT_65_ansi( /* Base */
