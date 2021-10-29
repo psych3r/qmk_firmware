@@ -1,28 +1,28 @@
 /* Copyright 2019 Yiancar
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 #include QMK_KEYBOARD_H
 //#include "nk65.h"
 //#include "drivers/issi/is31fl3733.h"
 
 /*{  matrix init and scan*/
 void matrix_init_user(void) {
-  //user initialization
+    //user initialization
 }
 void matrix_scan_user(void) {
-  //user matrix
+    //user matrix
 }
 /*}*/
 /*{ for complex tap dancing */
@@ -69,32 +69,32 @@ void dance_cln_reset(qk_tap_dance_state_t *state, void *user_data) {
 }
 
 /* Return an integer that corresponds to what kind of tap dance should be executed.
- *
- * How to figure out tap dance state: interrupted and pressed.
- *
- * Interrupted: If the state of a dance dance is "interrupted", that means that another key has been hit
- *  under the tapping term. This is typically indicitive that you are trying to "tap" the key.
- *
- * Pressed: Whether or not the key is still being pressed. If this value is true, that means the tapping term
- *  has ended, but the key is still being pressed down. This generally means the key is being "held".
- *
- * One thing that is currenlty not possible with qmk software in regards to tap dance is to mimic the "permissive hold"
- *  feature. In general, advanced tap dances do not work well if they are used with commonly typed letters.
- *  For example "A". Tap dances are best used on non-letter keys that are not hit while typing letters.
- *
- * Good places to put an advanced tap dance:
- *  z,q,x,j,k,v,b, any function key, home/end, comma, semi-colon
- *
- * Criteria for "good placement" of a tap dance key:
- *  Not a key that is hit frequently in a sentence
- *  Not a key that is used frequently to double tap, for example 'tab' is often double tapped in a terminal, or
- *    in a web form. So 'tab' would be a poor choice for a tap dance.
- *  Letters used in common words as a double. For example 'p' in 'pepper'. If a tap dance function existed on the
- *    letter 'p', the word 'pepper' would be quite frustating to type.
- *
- * For the third point, there does exist the 'DOUBLE_SINGLE_TAP', however this is not fully tested
- *
- */
+*
+* How to figure out tap dance state: interrupted and pressed.
+*
+* Interrupted: If the state of a dance dance is "interrupted", that means that another key has been hit
+*  under the tapping term. This is typically indicitive that you are trying to "tap" the key.
+*
+* Pressed: Whether or not the key is still being pressed. If this value is true, that means the tapping term
+*  has ended, but the key is still being pressed down. This generally means the key is being "held".
+*
+* One thing that is currenlty not possible with qmk software in regards to tap dance is to mimic the "permissive hold"
+*  feature. In general, advanced tap dances do not work well if they are used with commonly typed letters.
+*  For example "A". Tap dances are best used on non-letter keys that are not hit while typing letters.
+*
+* Good places to put an advanced tap dance:
+*  z,q,x,j,k,v,b, any function key, home/end, comma, semi-colon
+*
+* Criteria for "good placement" of a tap dance key:
+*  Not a key that is hit frequently in a sentence
+*  Not a key that is used frequently to double tap, for example 'tab' is often double tapped in a terminal, or
+*    in a web form. So 'tab' would be a poor choice for a tap dance.
+*  Letters used in common words as a double. For example 'p' in 'pepper'. If a tap dance function existed on the
+*    letter 'p', the word 'pepper' would be quite frustating to type.
+*
+* For the third point, there does exist the 'DOUBLE_SINGLE_TAP', however this is not fully tested
+*
+*/
 uint8_t cur_dance(qk_tap_dance_state_t *state) {
     if (state->count == 1) {
         if (state->interrupted || !state->pressed) return SINGLE_TAP;
@@ -174,7 +174,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   			if (record->tap.count > 0) 
   			{
     			if (record->event.pressed) 
-      				tap_code16(LCTL(KC_SPC));
+      			    tap_code16(LCTL(KC_SPC));
 
     			// do not continue with default tap action
     			// if the MT was pressed or released, but not held
@@ -191,34 +191,36 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 /*{ Key aliases */
 
 // Left-hand home row mods
-#define GUI_A LGUI_T(KC_A)
-#define ALT_S LALT_T(KC_S)
-#define CTL_D LCTL_T(KC_D)
-#define SFT_F LSFT_T(KC_F)
+#define GUIA LGUI_T(KC_A)
+#define ALTS LALT_T(KC_S)
+#define CTLD LCTL_T(KC_D)
+#define SFTF LSFT_T(KC_F)
 
 // Right-hand home row mods
-#define SFT_J RSFT_T(KC_J)
-#define CTL_K RCTL_T(KC_K)
-#define ALT_L LALT_T(KC_L)
+#define SFTJ RSFT_T(KC_J)
+#define CTLK RCTL_T(KC_K)
+#define ALTL LALT_T(KC_L)
 #define GUI_SCLN RGUI_T(KC_SCLN)
 
 // Tmux, hjkl and mods
 #define TMUX CTL_T(TMUX_PRE)
 #define HJKL LT(3, KC_W)
 #define MODS LT(4, KC_Q)
+#define TERM TD(TD_TERMINATOR)
 //#define XXX KC_TRNS
+
 /*}  */
 /*{ Tapping term */
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) 
 {
     switch (keycode) {
-        case GUI_A:
+        case GUIA:
             return TAPPING_TERM + 65; break;
-        case ALT_S:
+        case ALTS:
             return TAPPING_TERM + 85; break;
-        case CTL_D:
+        case CTLD:
             return TAPPING_TERM + 50; break;
-        case SFT_F:
+        case SFTF:
             return TAPPING_TERM - 10; break;
         default:
             return TAPPING_TERM;
@@ -227,40 +229,45 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record)
 /*}  */
 /*{ LAYERS  */
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-[0] = LAYOUT_65_ansi( /* Base */
-        KC_GESC, KC_1,    KC_2,   KC_3,   KC_4,   KC_5,   KC_6,   KC_7,   KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC, KC_DEL,\
-        KC_TAB,  MODS,    HJKL,   KC_E,   KC_R,   KC_T,   KC_Y,   KC_U,   KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS, KC_HOME,\
-        TMUX,    GUI_A,   ALT_S,  CTL_D,  SFT_F,  KC_G,   KC_H,   SFT_J,  CTL_K,   ALT_L,   KC_SCLN, KC_QUOT,          KC_ENT,  KC_END,\
-        KC_LSFT, KC_Z,    KC_X,   KC_C,   KC_V,   KC_B,   KC_N,   KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,          KC_UP,   TT(3), \
-        KC_LCTL, KC_LGUI, KC_LALT,                KC_SPC,                TD(TD_TERMINATOR), TT(2),   KC_RCTL, KC_LEFT, KC_DOWN, KC_RGHT),
+    [0] = LAYOUT_65_ansi( /* Base */
+    KC_GESC, KC_1,    KC_2,    KC_3,   KC_4,   KC_5,   KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC, KC_DEL,
+    KC_TAB,  MODS,    HJKL,    KC_E,   KC_R,   KC_T,   KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS, KC_HOME,
+    TMUX,    GUIA,    ALTS,    CTLD,   SFTF,   KC_G,   KC_H,    SFTJ,    CTLK,    ALTL,    KC_SCLN, KC_QUOT, KC_ENT,  KC_END,
+    KC_LSFT, KC_Z,    KC_X,    KC_C,   KC_V,   KC_B,   KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT, KC_UP,   TT(3),
+    KC_LCTL, KC_LGUI, KC_LALT, KC_SPC, TERM,   TT(2),  KC_RCTL, KC_LEFT, KC_DOWN, KC_RGHT
+    ),
 
-[1] = LAYOUT_65_ansi( /* Gaming Layer */
-        KC_GESC, KC_1,    KC_2,   KC_3,   KC_4,   KC_5,   KC_6,   KC_7,   KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC, KC_DEL,\
-        KC_TAB,  KC_Q,    KC_W,   KC_E,   KC_R,   KC_T,   KC_Y,   KC_U,   KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS, KC_HOME,\
-        KC_CAPS, KC_A,    KC_S,   KC_D,   KC_F,   KC_G,   KC_H,   KC_J,   KC_K,    KC_L,    KC_SCLN, KC_QUOT,          KC_ENT,  KC_END,\
-        KC_LSFT, KC_Z,    KC_X,   KC_C,   KC_V,   KC_B,   KC_N,   KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,          KC_UP,   DF(0), \
-        KC_LCTL, KC_LGUI, KC_LALT,                KC_SPC,                          KC_RALT, TT(2),   KC_RCTL, KC_LEFT, KC_DOWN, KC_RGHT),
+    [1] = LAYOUT_65_ansi( /* Gaming Layer */
+    KC_GESC, KC_1,    KC_2,    KC_3,   KC_4,    KC_5,   KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC, KC_DEL,
+    KC_TAB,  KC_Q,    KC_W,    KC_E,   KC_R,    KC_T,   KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS, KC_HOME,
+    KC_CAPS, KC_A,    KC_S,    KC_D,   KC_F,    KC_G,   KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, KC_ENT,  KC_END,
+    KC_LSFT, KC_Z,    KC_X,    KC_C,   KC_V,    KC_B,   KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT, KC_UP,   DF(0),
+    KC_LCTL, KC_LGUI, KC_LALT, KC_SPC, KC_RALT, TT(2),  KC_RCTL, KC_LEFT, KC_DOWN, KC_RGHT
+    ),
 
-[2] = LAYOUT_65_ansi( /* RGB and VOL layer */
-        KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_DEL,  KC_TRNS,\
-        KC_TRNS, S1_DEC,  S1_INC,  S2_DEC,  S2_INC,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_PGUP,\
-        KC_CAPS, EF_DEC,  EF_INC,  H1_DEC,  H1_INC,  H2_DEC,  H2_INC,  BR_DEC,  BR_INC,  ES_DEC,  ES_INC,  KC_TRNS,          KC_TRNS, KC_PGDN,\
-        KC_TRNS, KC_VOLD, KC_VOLU, KC_MUTE, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,          KC_VOLU, KC_MUTE,\
-        KC_TRNS, KC_TRNS, KC_TRNS,                   KC_TRNS,                            KC_TRNS, KC_TRNS, KC_TRNS, KC_MPRV, KC_VOLD, KC_MNXT),
+    [2] = LAYOUT_65_ansi( /* RGB and VOL layer */
+    KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_DEL,  _______,
+    _______, S1_DEC,  S1_INC,  S2_DEC,  S2_INC,  _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_PGUP,
+    KC_CAPS, EF_DEC,  EF_INC,  H1_DEC,  H1_INC,  H2_DEC,  H2_INC,  BR_DEC,  BR_INC,  ES_DEC,  ES_INC,  _______, _______, KC_PGDN,
+    _______, KC_VOLD, KC_VOLU, KC_MUTE, _______, _______, _______, _______, _______, _______, _______, _______, KC_VOLU, KC_MUTE,
+    _______, _______, _______, _______, _______, _______, _______, KC_MPRV, KC_VOLD, KC_MNXT
+    ),
 
-[3] = LAYOUT_65_ansi( /* HJKL layer */
-        KC_PWR,  KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSPC, KC_DEL,\
-        KC_TAB,  KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSLS, KC_PGUP,\
-        TMUX,    KC_LEFT, KC_RIGHT, KC_UP,   KC_DOWN, KC_TRNS, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,KC_ENT,  KC_TRNS,          KC_ENT,  KC_PGDN,\
-        KC_LSFT, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_RSFT,          KC_VOLU, KC_TRNS,\
-        KC_LCTL, KC_LGUI, KC_LALT,           KC_TRNS,                                     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_VOLD, DF(1)),
+    [3] = LAYOUT_65_ansi( /* HJKL layer */
+    KC_PWR,  _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_BSPC, KC_DEL,
+    KC_TAB,  _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_BSLS, KC_PGUP,
+    TMUX,    KC_LEFT, KC_RIGHT, KC_UP,   KC_DOWN, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,KC_ENT,  _______, KC_ENT,  KC_PGDN,
+    KC_LSFT, _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______, KC_RSFT, KC_VOLU, _______,
+    KC_LCTL, KC_LGUI, KC_LALT,  _______, _______, _______, _______, _______, KC_VOLD, DF(1)
+    ),
 
-[4] = LAYOUT_65_ansi( /* MODS layer */
-        KC_PWR,  KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSPC, KC_DEL,\
-        KC_TAB,  KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSLS, KC_PGUP,\
-        TMUX,    KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_HOME, KC_BSPC, KC_DEL,  KC_END,  KC_ENT,  KC_TRNS,          KC_ENT,  KC_PGDN,\
-        KC_LSFT, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_RSFT,          KC_VOLU, KC_TRNS,\
-        KC_LCTL, KC_LGUI, KC_LALT,           KC_TRNS,                                     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_VOLD, KC_TRNS),
+    [4] = LAYOUT_65_ansi( /* MODS layer */
+    KC_PWR,  _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_BSPC, KC_DEL,
+    KC_TAB,  _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_BSLS, KC_PGUP,
+    TMUX,    _______, _______,  _______, _______, _______, KC_HOME, KC_BSPC, KC_DEL,  KC_END,  KC_ENT,  _______, KC_ENT,  KC_PGDN,
+    KC_LSFT, _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______, KC_RSFT, KC_VOLU, _______,
+    KC_LCTL, KC_LGUI, KC_LALT,  _______, _______, _______, _______, _______, KC_VOLD, _______
+    ),
 
 };
 /*}*/
