@@ -1,12 +1,10 @@
 #include QMK_KEYBOARD_H
 
 /*{ for complex tap dancing */
-
 typedef struct {
     bool is_press_action;
     uint8_t state;
 } tap;
-
 enum {
     SINGLE_TAP = 1,
     SINGLE_HOLD,
@@ -16,23 +14,19 @@ enum {
     TRIPLE_TAP,
     TRIPLE_HOLD
 };
-
 /*}*/
 
 /*{ Custom keycodes */
-
 // custom KCs enum
 enum custom_keycodes {
     MT_TMUXPRE = SAFE_RANGE
 };
 #define TMUX_PRE CTL_T(MT_TMUXPRE)
-
 // tap dance enum
 enum tap_dance_keys {
     TD_CLN = 1,
     TD_TERMINATOR
 };
-
 /*}*/
 
 /*{ custom tap dance functions */
@@ -43,7 +37,6 @@ void dance_cln_finished(qk_tap_dance_state_t *state, void *user_data) {
         register_code16(KC_COLN);
     }
 }
-
 void dance_cln_reset(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
         unregister_code(KC_SCLN);
@@ -147,7 +140,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 };
 
 /*}*/
-/*}*/
+
 /*{ process record user */
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) 
@@ -174,66 +167,92 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 }
 
 /*}*/
-/*{ Home row mods */
+
+/*{ Key aliases */
 
 // Left-hand home row mods
-#define GUI_A LGUI_T(KC_A)
-#define ALT_S LALT_T(KC_S)
-#define CTL_D LCTL_T(KC_D)
-#define SFT_F LSFT_T(KC_F)
+#define GUIA LGUI_T(KC_A)
+#define ALTS LALT_T(KC_S)
+#define CTLD LCTL_T(KC_D)
+#define SFTF LSFT_T(KC_F)
 
 // Right-hand home row mods
-#define SFT_J RSFT_T(KC_J)
-#define CTL_K RCTL_T(KC_K)
-#define ALT_L LALT_T(KC_L)
+#define SFTJ RSFT_T(KC_J)
+#define CTLK RCTL_T(KC_K)
+#define ALTL LALT_T(KC_L)
 #define GUI_SCLN RGUI_T(KC_SCLN)
+
+// Tmux, hjkl and mods
+#define TMUX CTL_T(TMUX_PRE)
+#define HJKL LT(3, KC_W)
+#define MODS LT(4, KC_Q)
+//#define XXX KC_TRNS
+
+#define RGHT LT(3,KC_RIGHT)
+#define UP__ RSFT_T(KC_UP)
+#define LEFT LT(2, KC_LEFT)
+#define DOWN RCTL_T(KC_DOWN)
+#define TERM TD(TD_TERMINATOR)
 
 /*}  */
 
-
-uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+/*{ Tapping term */
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) 
+{
     switch (keycode) {
-        case GUI_A:
+        case GUIA:
             return TAPPING_TERM + 50; break;
-        case ALT_S:
+        case ALTS:
             return TAPPING_TERM + 75; break;
-        case CTL_D:
+        case CTLD:
             return TAPPING_TERM + 50; break;
         default:
             return TAPPING_TERM;
     }
 }
+/*}  */
 
-/*{ Layout */
+/*TD(TD_CLN)*/
+/*{ LAYERS  */
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [0] = LAYOUT_60_ansi(
-        KC_GESC,     KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC,
-        KC_TAB,      KC_Q,    LT(1,KC_W),    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS,
-      CTL_T(TMUX_PRE), GUI_A,   ALT_S,   CTL_D,   SFT_F,    KC_G,    KC_H,    SFT_J,   CTL_K,   ALT_L,   KC_SCLN /*TD(TD_CLN)*/,KC_QUOT,          KC_ENT,
-        KC_LSFT,                 KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,          RSFT_T(KC_UP),
-        KC_LCTL,     KC_LGUI, KC_LALT,                            KC_SPC,                             TD(TD_TERMINATOR), LT(2, KC_LEFT),   RCTL_T(KC_DOWN),   LT(1, KC_RIGHT)
-        //KC_LCTL,     KC_LGUI, KC_LALT,                            KC_SPC,                             TD(TD_TERMINATOR), MO(2),   RCTL_T(KC_DOWN),   TT(1)
+    [0] = LAYOUT_60_ansi( /* Base */
+        KC_GESC, KC_1,    KC_2,    KC_3,   KC_4,   KC_5,   KC_6,   KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC,
+        KC_TAB,  MODS,    HJKL,    KC_E,   KC_R,   KC_T,   KC_Y,   KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS,
+        TMUX,    GUIA,    ALTS,    CTLD,   SFTF,   KC_G,   KC_H,   SFTJ,    CTLK,    ALTL,    KC_SCLN, KC_QUOT, KC_ENT ,
+        KC_LSFT, KC_Z,    KC_X,    KC_C,   KC_V,   KC_B,   KC_N,   KC_M,    KC_COMM, KC_DOT,  KC_SLSH, UP__,
+        KC_LCTL, KC_LGUI, KC_LALT, KC_SPC, TERM,   LEFT,   DOWN,   RGHT
     ),
-    [1] = LAYOUT_60_ansi(
-        KC_GESC, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_DEL,
-        _______, _______, KC_UP,   _______, _______, _______, KC_CALC, _______, KC_INS,  _______, KC_PSCR, KC_SLCK, KC_PAUS, KC_HOME,
-        _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, KC_HOME, KC_PGUP,          KC_END,
-        KC_MPRV,          KC_VOLD, KC_VOLU, KC_MUTE, _______, _______, NK_TOGG, _______, _______, KC_END,  KC_VOLU,            KC_MUTE,
-        _______, _______, _______,                            _______,                            KC_LEFT, KC_VOLD, KC_RIGHT, _______
+
+    [1] = LAYOUT_65_ansi( /* Gaming Layer */
+        KC_GESC, KC_1,    KC_2,    KC_3,   KC_4,    KC_5,   KC_6,    KC_7,   KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC,
+        KC_TAB,  KC_Q,    KC_W,    KC_E,   KC_R,    KC_T,   KC_Y,    KC_U,   KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS,
+        KC_CAPS, KC_A,    KC_S,    KC_D,   KC_F,    KC_G,   KC_H,    KC_J,   KC_K,    KC_L,    KC_SCLN, KC_QUOT, KC_ENT,
+        KC_LSFT, KC_Z,    KC_X,    KC_C,   KC_V,    KC_B,   KC_N,    KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
+        KC_LCTL, KC_LGUI, KC_LALT, KC_SPC, KC_RALT, TT(3),  KC_RCTL, DF(0)
     ),
-    [2] = LAYOUT_60_ansi(
-        KC_PWR, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  TO(3),
+
+    [2] = LAYOUT_60_ansi( /* RGB and VOL layer */
+        KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  TO(4),
         _______, RGB_TOG, _______, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, RGB_MOD, _______, _______, _______, RESET,
-        KC_CAPS, _______, _______, _______, _______, _______, _______, _______, RGB_SPI, RGB_SPD, _______, _______,          _______,
-        _______,          _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,
-        _______, _______, _______,                            _______,                            _______, _______, _______, _______
+        KC_CAPS, _______, _______, _______, _______, _______, _______, _______, RGB_SPI, RGB_SPD, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______, DF(1)
     ),
-    [3] = LAYOUT_60_ansi(
-        KC_GESC,     KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC,
-        KC_TAB,      KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS,
-        KC_CAPS,     KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,          KC_ENT,
-        KC_LSFT,     KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,          KC_RSFT,
-        KC_LCTL,     KC_LGUI, KC_LALT,                            KC_SPC,                    KC_RALT, KC_RGUI, KC_RCTL,   TO(0)
+
+    [3] = LAYOUT_60_ansi( /* HJKL layer */
+        KC_PWR,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,    KC_F10,  KC_F11,  KC_F12,   KC_DEL,
+        _______, _______, KC_UP,   _______, _______, _______, KC_CALC, _______, KC_INS,  _______,  KC_PSCR, KC_SLCK, KC_PAUS,  KC_HOME,
+        _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, KC_HOME, KC_PGUP, KC_END,
+        KC_MPRV, KC_VOLD, KC_VOLU, KC_MUTE, _______, _______, NK_TOGG, _______, _______,  KC_END,  KC_VOLU, KC_MUTE,
+        _______, _______, _______, _______, KC_LEFT, KC_VOLD, KC_RIGHT, _______
+    ),
+
+    [4] = LAYOUT_65_ansi( /* MODS layer */
+        KC_PWR,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSPC,
+        KC_TAB,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSLS,
+        TMUX,    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_HOME, KC_BSPC, KC_DEL,  KC_END,  KC_ENT,  KC_TRNS, KC_ENT,
+        KC_LSFT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_RSFT,
+        KC_LCTL, KC_LGUI, KC_LALT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
     ),
 };
 /*}*/
