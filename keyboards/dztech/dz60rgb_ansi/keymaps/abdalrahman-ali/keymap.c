@@ -15,7 +15,6 @@ enum {
     TRIPLE_HOLD
 };
 /*}*/
-
 /*{ Custom keycodes */
 // custom KCs enum
 enum custom_keycodes {
@@ -28,7 +27,6 @@ enum tap_dance_keys {
     TD_TERMINATOR
 };
 /*}*/
-
 /*{ custom tap dance functions */
 void dance_cln_finished(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
@@ -130,7 +128,6 @@ void x_reset(qk_tap_dance_state_t *state, void *user_data) {
 }
 
 /*}*/
-
 /*{ tap dance actions array */
 
 // All tap dance functions would go here.
@@ -140,7 +137,6 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 };
 
 /*}*/
-
 /*{ process record user */
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) 
@@ -167,7 +163,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 }
 
 /*}*/
-
 /*{ Key aliases */
 
 // Left-hand home row mods
@@ -195,7 +190,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #define TERM TD(TD_TERMINATOR)
 
 /*}  */
-
 /*{ Tapping term */
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) 
 {
@@ -211,7 +205,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record)
     }
 }
 /*}  */
-
 /*TD(TD_CLN)*/
 /*{ LAYERS  */
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
