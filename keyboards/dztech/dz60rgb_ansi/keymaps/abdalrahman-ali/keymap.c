@@ -81,7 +81,6 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max)
     switch(get_highest_layer(default_layer_state))
     {
         case _game:
-            //for (uint8_t i = 0; i < ARRAYSIZE(LED_LIST_LOL); i++) rgb_matrix_set_color(LED_LIST_LOL[i], RGB_GOLD);
             set_array_rgb(LED_LIST_LOL, ARRAYSIZE(LED_LIST_LOL), RGB_GOLD);
             break;
         default:
@@ -90,21 +89,15 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max)
 
     switch(get_highest_layer(layer_state))
     {
-        case _game:
-            //for (uint8_t i = 0; i < ARRAYSIZE(LED_LIST_LOL); i++) rgb_matrix_set_color(LED_LIST_LOL[i], RGB_GOLD);
-            set_array_rgb(LED_LIST_LOL, ARRAYSIZE(LED_LIST_LOL), RGB_GOLD);
-            break;
         case _vrgb:
-            rgb_matrix_set_color(LED_SPC,  RGB_GREEN);
             rgb_matrix_set_color(LED_FN,   RGB_GOLD);
-            rgb_matrix_set_color(LED_RCTL, RGB_GOLD);
             break;
         case _hjkl:
-            for (uint8_t i = 0; i < ARRAYSIZE(LED_LIST_ARROWS); i++) rgb_matrix_set_color(LED_LIST_ARROWS[i], RGB_GOLDENROD);
+            set_array_rgb(LED_LIST_ARROWS, ARRAYSIZE(LED_LIST_ARROWS), RGB_GOLDENROD);
             break;
         case _mods:
-            for (uint8_t i = 0; i < ARRAYSIZE(LED_LIST_NUMPAD); i++) rgb_matrix_set_color(LED_LIST_NUMPAD[i], RGB_CYAN);
-            for (uint8_t i = 0; i < ARRAYSIZE(LED_LIST_WASD); i++) rgb_matrix_set_color(LED_LIST_WASD[i], RGB_CHARTREUSE);
+            set_array_rgb(LED_LIST_NUMPAD, ARRAYSIZE(LED_LIST_NUMPAD), RGB_CYAN);
+            set_array_rgb(LED_LIST_WASD,   ARRAYSIZE(LED_LIST_WASD),   RGB_CHARTREUSE);
             break;
         default:
             break;
