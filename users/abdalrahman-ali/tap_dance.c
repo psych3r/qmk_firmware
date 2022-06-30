@@ -11,7 +11,8 @@ static tap xtap_state = {
 // All tap dance functions would go here.
 qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_CLN]         = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_cln_finished, dance_cln_reset),
-    [TD_TERMINATOR]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, terminator_finished, terminator_reset)
+    [TD_TERMINATOR]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, terminator_finished, terminator_reset),
+    [TD_LSFT_CAPS]   = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_LSFT_finished, dance_LSFT_reset),
 };
 
 // https://docs.qmk.fm/#/feature_tap_dance 
@@ -81,4 +82,19 @@ void dance_cln_reset(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
+    void dance_LSFT_finished(qk_tap_dance_state_t *state, void *user_data) {
+        if (state->count == 1 || keymap_config.no_gui) {
+            register_code16(KC_LSFT);
+        } else {
+            register_code(KC_CAPS);
+        }
+    }
+
+    void dance_LSFT_reset(qk_tap_dance_state_t *state, void *user_data) {
+        if (state->count == 1 || keymap_config.no_gui) {
+            unregister_code16(KC_LSFT);
+        } else {
+            unregister_code(KC_CAPS);
+        }
+    }
 

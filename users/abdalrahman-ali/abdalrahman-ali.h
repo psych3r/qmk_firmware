@@ -37,6 +37,7 @@ enum custom_keycodes {
 #define HJKL LT(_hjkl, KC_W)
 #define MODS LT(_mods, KC_Q)
 #define TERM TD(TD_TERMINATOR)
+#define SCAP TD(TD_LSFT_CAPS)
 //#define XXX KC_TRNS
 
 #define RGHT LT(_hjkl,KC_RIGHT)

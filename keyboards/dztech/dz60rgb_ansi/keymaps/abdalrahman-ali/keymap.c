@@ -1,4 +1,5 @@
 #include QMK_KEYBOARD_H
+#include "rgb_matrix_map.h"
 #include "abdalrahman-ali.h"
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) 
@@ -20,7 +21,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_GESC, KC_1,    KC_2,    KC_3,   KC_4,   KC_5,   KC_6,   KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC,
         KC_TAB,  MODS,    HJKL,    KC_E,   KC_R,   KC_T,   KC_Y,   KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS,
         TMUX,    GUIA,    ALTS,    CTLD,   SFTF,   KC_G,   KC_H,   SFTJ,    CTLK,    ALTL,    KC_SCLN, KC_QUOT, KC_ENT ,
-        KC_LSFT, KC_Z,    KC_X,    KC_C,   KC_V,   KC_B,   KC_N,   KC_M,    KC_COMM, KC_DOT,  KC_SLSH, UP__,
+        SCAP,    KC_Z,    KC_X,    KC_C,   KC_V,   KC_B,   KC_N,   KC_M,    KC_COMM, KC_DOT,  KC_SLSH, UP__,
         KC_LCTL, KC_LGUI, KC_LALT, KC_SPC, TERM,   LEFT,   DWNN,   RGHT
     ),
 
@@ -56,3 +57,81 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LCTL, KC_LGUI, KC_LALT, _______, _______, _______, _______, _______
     ),
 };
+
+//#ifdef RGB_MATRIX_ENABLE
+
+// Capslock, Scroll lock and Numlock indicator
+void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max)
+{
+    //if (get_rgb_nightmode()) rgb_matrix_set_color_all(RGB_OFF);
+
+    if (IS_HOST_LED_ON(USB_LED_CAPS_LOCK))
+    {
+        rgb_matrix_set_color(LED_CAPS, RGB_RED);
+        rgb_matrix_set_color(LED_Q,    RGB_RED);
+        rgb_matrix_set_color(LED_A,    RGB_RED);
+    }
+
+    /** if (host_keyboard_led_state().caps_lock) { */
+    /**     RGB_MATRIX_INDICATOR_SET_COLOR(LED_CAPS, 255, 255, 255); */
+    /** } else { */
+    /**     RGB_MATRIX_INDICATOR_SET_COLOR(LED_CAPS, 0, 0, 0); */
+    /** } */
+
+    switch(get_highest_layer(default_layer_state))
+    {
+        case _game:
+            //for (uint8_t i = 0; i < ARRAYSIZE(LED_LIST_LOL); i++) rgb_matrix_set_color(LED_LIST_LOL[i], RGB_GOLD);
+            set_array_rgb(LED_LIST_LOL, ARRAYSIZE(LED_LIST_LOL), RGB_GOLD);
+            break;
+        default:
+            break;
+    }
+
+    switch(get_highest_layer(layer_state))
+    {
+        case _game:
+            //for (uint8_t i = 0; i < ARRAYSIZE(LED_LIST_LOL); i++) rgb_matrix_set_color(LED_LIST_LOL[i], RGB_GOLD);
+            set_array_rgb(LED_LIST_LOL, ARRAYSIZE(LED_LIST_LOL), RGB_GOLD);
+            break;
+        case _vrgb:
+            rgb_matrix_set_color(LED_SPC,  RGB_GREEN);
+            rgb_matrix_set_color(LED_FN,   RGB_GOLD);
+            rgb_matrix_set_color(LED_RCTL, RGB_GOLD);
+            break;
+        case _hjkl:
+            for (uint8_t i = 0; i < ARRAYSIZE(LED_LIST_ARROWS); i++) rgb_matrix_set_color(LED_LIST_ARROWS[i], RGB_GOLDENROD);
+            break;
+        case _mods:
+            for (uint8_t i = 0; i < ARRAYSIZE(LED_LIST_NUMPAD); i++) rgb_matrix_set_color(LED_LIST_NUMPAD[i], RGB_CYAN);
+            for (uint8_t i = 0; i < ARRAYSIZE(LED_LIST_WASD); i++) rgb_matrix_set_color(LED_LIST_WASD[i], RGB_CHARTREUSE);
+            break;
+        default:
+            break;
+    }
+}
+
+void suspend_power_down_user(void)
+{
+    rgb_matrix_set_suspend_state(true);
+}
+
+void suspend_wakeup_init_user(void)
+{
+    rgb_matrix_set_suspend_state(false);
+}
+//#endif
+
+void keyboard_post_init_user(void) {
+    // start with no rgb, yet enable rgb indication...
+    rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
+    rgb_matrix_sethsv_noeeprom(HSV_OFF);
+}
+
+/** void keyboard_post_init_keymap(void) { */
+/**     // keyboard_post_init_user() moved to userspace */
+/**     #ifdef RGB_MATRIX_ENABLE */
+/**         rgb_matrix_mode(RGB_MATRIX_SOLID_COLOR); */
+/**         activate_rgb_nightmode(false);  // Set to true if you want to startup in nightmode, otherwise use Fn + Z to toggle */
+/**     #endif */
+/** } */
