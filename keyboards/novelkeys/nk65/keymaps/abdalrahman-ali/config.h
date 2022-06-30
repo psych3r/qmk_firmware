@@ -4,6 +4,8 @@
 
 #define TAPPING_TERM_PER_KEY
 
+//#define VIA_CUSTOM_LIGHTING_ENABLE
+
 // enable if fast tap modding inserts two tapped keys, refer to docs
 //#define PERMISSIVE_HOLD
 
