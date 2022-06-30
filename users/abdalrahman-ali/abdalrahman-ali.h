@@ -34,12 +34,12 @@ enum custom_keycodes {
 // Tmux, hjkl and mods
 #define TMUX_PRE LCTL_T(MT_TMUXPRE)
 #define TMUX LCTL_T(TMUX_PRE)
-#define HJKL LT(3, KC_W)
-#define MODS LT(4, KC_Q)
+#define HJKL LT(_hjkl, KC_W)
+#define MODS LT(_mods, KC_Q)
 #define TERM TD(TD_TERMINATOR)
 //#define XXX KC_TRNS
 
-#define RGHT LT(3,KC_RIGHT)
+#define RGHT LT(_hjkl,KC_RIGHT)
 #define UP__ RSFT_T(KC_UP)
-#define LEFT LT(2, KC_LEFT)
+#define LEFT LT(_vrgb, KC_LEFT)
 #define DWNN RCTL_T(KC_DOWN)
