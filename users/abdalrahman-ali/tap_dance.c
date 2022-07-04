@@ -42,11 +42,11 @@ uint8_t cur_dance(qk_tap_dance_state_t *state) {
 void terminator_finished(qk_tap_dance_state_t *state, void *user_data) {
     xtap_state.state = cur_dance(state);
     switch (xtap_state.state) {
-        case SINGLE_TAP: register_code16(LALT(KC_F4)); break;
-        case SINGLE_HOLD: register_code(KC_RALT); break;
-        case DOUBLE_TAP: register_code16(RSFT(KC_DEL)); break;
-        case DOUBLE_HOLD: register_code(KC_RALT); break;
-        case TRIPLE_TAP: register_code16(LCA(KC_DEL)); break;
+        case SINGLE_TAP:  register_code16(LALT(KC_F4));  break;
+        case SINGLE_HOLD: register_code(KC_RALT);        break;
+        case DOUBLE_TAP:  register_code16(RSFT(KC_DEL)); break;
+        case DOUBLE_HOLD: register_code(KC_RALT);        break;
+        case TRIPLE_TAP:  register_code16(LCA(KC_DEL));  break;
         // Last case is for fast typing. Assuming your key is `f`:
         // For example, when typing the word `buffer`, and you want to make sure that you send `ff` and not `Esc`.
         // In order to type `ff` when typing fast, the next character will have to be hit within the `TAPPING_TERM`, which by default is 200ms.
@@ -56,12 +56,12 @@ void terminator_finished(qk_tap_dance_state_t *state, void *user_data) {
 
 void terminator_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (xtap_state.state) {
-        case SINGLE_TAP: unregister_code16(LALT(KC_F4)); break;
-        case SINGLE_HOLD: unregister_code(KC_RALT); break;
-        case DOUBLE_TAP: unregister_code16(RSFT(KC_DEL)); break;
-        case DOUBLE_HOLD: unregister_code(KC_RALT);break;
+        case SINGLE_TAP:  unregister_code16(LALT(KC_F4));  break;
+        case SINGLE_HOLD: unregister_code(KC_RALT);        break;
+        case DOUBLE_TAP:  unregister_code16(RSFT(KC_DEL)); break;
+        case DOUBLE_HOLD: unregister_code(KC_RALT);        break;
+        case TRIPLE_TAP:  unregister_code16(LCA(KC_DEL));  break;
         //case DOUBLE_SINGLE_TAP: unregister_code(KC_X);break;
-        case TRIPLE_TAP: unregister_code16(LCA(KC_DEL)); break;
     }
     xtap_state.state = 0;
 }
