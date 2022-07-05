@@ -21,10 +21,16 @@ const uint8_t LED_LIST_HJKL[]      = { LED_H   , LED_J    , LED_K , LED_L };
 const uint8_t LED_LIST_NUMROW[]    = { LED_ESC , LED_1    , LED_2 , LED_3, LED_4, LED_5, LED_6, LED_7, LED_8, LED_9, LED_0, LED_MINS, LED_EQL , LED_BSPC, LED_DEL};
 const uint8_t LED_LIST_QWERTYROW[] = { LED_TAB , LED_Q    , LED_W , LED_E, LED_R, LED_T, LED_Y, LED_U, LED_I, LED_O, LED_P, LED_LBRC, LED_RBRC, LED_BSLS, LED_PGUP};
 const uint8_t LED_LIST_NUMPAD[] = {
-    LED_7, LED_8, LED_9,
-    LED_U, LED_I, LED_O,
-    LED_J, LED_K, LED_L,
-    LED_M, LED_COMM, LED_DOT
+    LED_I, LED_O,    LED_P,
+    LED_K, LED_L,    LED_SCLN,
+    LED_M, LED_COMM, LED_DOT,
+    LED_SPC, LED_FN, LED_RCTL
 };
+// const uint8_t LED_LIST_NUMPAD[] = {
+//     LED_7, LED_8, LED_9,
+//     LED_U, LED_I, LED_O,
+//     LED_J, LED_K, LED_L,
+//     LED_M, LED_COMM, LED_DOT
+// };
 
 #endif

@@ -11,7 +11,8 @@ enum my_layers {
     _game,
     _vrgb,
     _hjkl,
-    _mods
+    _mods,
+    _numpad
 };
 
 // custom KCs enum
