@@ -11,6 +11,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record)
             return TAPPING_TERM + 75; break;
         case CTLD:
             return TAPPING_TERM + 50; break;
+        case SFTF:
+            return TAPPING_TERM - 10; break;
         default:
             return TAPPING_TERM;
     }
@@ -93,7 +95,7 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max)
             rgb_matrix_set_color(LED_FN,   RGB_GOLD);
             break;
         case _hjkl:
-            set_array_rgb(LED_LIST_ARROWS, ARRAYSIZE(LED_LIST_ARROWS), RGB_GOLDENROD);
+            set_array_rgb(LED_LIST_HJKL, ARRAYSIZE(LED_LIST_HJKL), RGB_GOLDENROD);
             break;
         case _mods:
             set_array_rgb(LED_LIST_NUMPAD, ARRAYSIZE(LED_LIST_NUMPAD), RGB_CYAN);
@@ -115,7 +117,7 @@ void suspend_wakeup_init_user(void)
 }
 //#endif
 
-void keyboard_post_init_user(void) {
+void keyboard_post_init_kb(void) {
     // start with no rgb, yet enable rgb indication...
     rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
     rgb_matrix_sethsv_noeeprom(HSV_OFF);
