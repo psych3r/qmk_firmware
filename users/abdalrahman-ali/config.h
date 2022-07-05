@@ -1,11 +1,12 @@
+// default is 5
+#define TAPPING_TOGGLE 2
+
 // tapping timeout in ms, for TAPPING_TERM_PER_KEY, refer to the docs
 // Configure the global tapping term (default: 200ms)
 #define TAPPING_TERM 200
-
 #define TAPPING_TERM_PER_KEY
 
 //#define VIA_CUSTOM_LIGHTING_ENABLE
-
 // enable if fast tap modding inserts two tapped keys, refer to docs
 //#define PERMISSIVE_HOLD
 
@@ -20,7 +21,3 @@
 
 // Apply the modifier on keys that are tapped during a short hold of a modtap
 // #define PERMISSIVE_HOLD
-
-
-// default is 5
-#define TAPPING_TOGGLE 2

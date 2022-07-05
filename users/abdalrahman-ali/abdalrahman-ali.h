@@ -19,6 +19,8 @@ enum custom_keycodes {
     MT_TMUXPRE = SAFE_RANGE
 };
 
+#define ARRAYSIZE(arr)  sizeof(arr)/sizeof(arr[0])
+
 // Left-hand home row mods
 #define GUIA LGUI_T(KC_A)
 #define ALTS LALT_T(KC_S)
@@ -44,3 +46,21 @@ enum custom_keycodes {
 #define UP__ RSFT_T(KC_UP)
 #define LEFT LT(_vrgb, KC_LEFT)
 #define DWNN RCTL_T(KC_DOWN)
+
+
+void activate_rgb_nightmode (bool turn_on);
+bool get_rgb_nightmode(void);
+void set_array_rgb(const uint8_t* led_array, uint8_t arr_size, uint8_t r, uint8_t g, uint8_t b);
+
+// IDLE TIMEOUTS
+#ifdef IDLE_TIMEOUT_ENABLE
+    #define TIMEOUT_THRESHOLD_DEFAULT   5    // default timeout minutes
+    #define TIMEOUT_THRESHOLD_MAX       140  // upper limits (2 hours and 10 minutes -- no rgb indicators above this value)
+
+    //prototype  functions
+    uint16_t get_timeout_threshold(void);
+    void timeout_reset_timer(void);
+    void timeout_update_threshold(bool increase);
+    void timeout_tick_timer(void);
+#endif  //IDLE_TIMEOUT_ENABLE
+

@@ -1,7 +1,11 @@
 SRC += abdalrahman-ali.c
 
 ifdef TAP_DANCE_ENABLE
-SRC += tap_dance.c
+    SRC += tap_dance.c
+endif
+
+ifeq ($(strip $(IDLE_TIMEOUT_ENABLE)), yes)
+    OPT_DEFS += -DIDLE_TIMEOUT_ENABLE
 endif
 
 TAP_DANCE_ENABLE = yes
