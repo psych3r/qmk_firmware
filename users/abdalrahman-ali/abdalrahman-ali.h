@@ -49,9 +49,13 @@ enum custom_keycodes {
 #define DWNN RCTL_T(KC_DOWN)
 
 
+#ifdef RGB_MATRIX_ENABLE
+
 void activate_rgb_nightmode (bool turn_on);
 bool get_rgb_nightmode(void);
 void set_array_rgb(const uint8_t* led_array, uint8_t arr_size, uint8_t r, uint8_t g, uint8_t b);
+
+#endif
 
 // IDLE TIMEOUTS
 #ifdef IDLE_TIMEOUT_ENABLE

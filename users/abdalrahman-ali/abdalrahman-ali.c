@@ -25,6 +25,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record)
     return true;
 }
 
+#ifdef RGB_MATRIX_ENABLE
+
 static bool rgb_nightmode = false;
 
 // Turn on/off NUM LOCK if current state is different
@@ -40,6 +42,8 @@ void set_array_rgb(const uint8_t* led_array, uint8_t arr_size, uint8_t r, uint8_
 {
     for (uint8_t i = 0; i < arr_size; i++) rgb_matrix_set_color(led_array[i], r, g, b);
 }
+
+#endif
 
 // TIMEOUTS
 #ifdef IDLE_TIMEOUT_ENABLE
