@@ -6,16 +6,12 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t* record)
 {
     switch (keycode)
     {
-        case GUIA:
-            return TAPPING_TERM + 50; break;
-        case ALTS:
-            return TAPPING_TERM + 75; break;
-        case CTLD:
-            return TAPPING_TERM + 50; break;
-        case SFTF:
-            return TAPPING_TERM - 10; break;
-        default:
-            return TAPPING_TERM;
+        case GUIA: return TAPPING_TERM + 50; break;
+        case ALTS: return TAPPING_TERM + 75; break;
+        case CTLD: return TAPPING_TERM + 50; break;
+        case SFTF: return TAPPING_TERM - 10; break;
+        case SFTJ: return TAPPING_TERM - 10; break;
+        default:   return TAPPING_TERM;
     }
 }
 

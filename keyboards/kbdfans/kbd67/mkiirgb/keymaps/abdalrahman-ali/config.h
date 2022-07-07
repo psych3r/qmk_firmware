@@ -1,7 +1,7 @@
 // enable if fast tap modding inserts two tapped keys, refer to docs
 //#define PERMISSIVE_HOLD
 
-//#define TAPPING_TERM 180
+#define TAPPING_TERM 180
 //#define RGB_DISABLE_TIMEOUT 1000
 
 #ifdef RGB_MATRIX_ENABLE
