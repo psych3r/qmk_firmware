@@ -32,7 +32,7 @@ enum custom_keycodes {
 #define SFTJ RSFT_T(KC_J)
 #define CTLK RCTL_T(KC_K)
 #define ALTL LALT_T(KC_L)
-#define GUI_SCLN RGUI_T(KC_SCLN)
+#define GUIN RGUI_T(KC_SCLN)
 
 // Tmux, hjkl and mods
 #define TMUX_PRE LCTL_T(MT_TMUXPRE)
