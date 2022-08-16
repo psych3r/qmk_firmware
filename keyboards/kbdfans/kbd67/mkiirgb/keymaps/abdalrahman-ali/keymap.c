@@ -11,7 +11,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t* record)
         //case ALTS: return TAPPING_TERM + 80; break;
         case ALTS: return TAPPING_TERM + 90; break;
         case CTLD: return TAPPING_TERM + 50; break;
-        case SFTF: return TAPPING_TERM + 45; break;
+        case SFTF: return TAPPING_TERM + 30; break;
         //case SFTF: return TAPPING_TERM - 10; break;
         case SFTJ: return TAPPING_TERM - 10; break;
         case GUIN: return TAPPING_TERM + 50; break;

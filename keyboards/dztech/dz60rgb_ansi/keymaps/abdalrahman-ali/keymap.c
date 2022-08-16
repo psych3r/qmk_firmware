@@ -12,7 +12,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record)
         case CTLD:
             return TAPPING_TERM + 50; break;
         case SFTF:
-            return TAPPING_TERM - 10; break;
+            return TAPPING_TERM - 25; break;
         case GUIN:
             return TAPPING_TERM + 50; break;
         default:
