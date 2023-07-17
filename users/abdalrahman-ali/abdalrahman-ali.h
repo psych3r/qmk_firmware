@@ -17,7 +17,9 @@ enum my_layers {
 
 // custom KCs enum
 enum custom_keycodes {
-    MT_TMUXPRE = SAFE_RANGE
+    MT_TMUXPRE = SAFE_RANGE,
+    PASS_MACRO,
+    DYNAMIC_MACRO_RANGE // should be last
 };
 
 #define ARRAYSIZE(arr)  sizeof(arr)/sizeof(arr[0])

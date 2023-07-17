@@ -9,14 +9,14 @@ static tap xtap_state = {
 };
 
 // All tap dance functions would go here.
-qk_tap_dance_action_t tap_dance_actions[] = {
+tap_dance_action_t tap_dance_actions[] = {
     [TD_CLN]         = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_cln_finished, dance_cln_reset),
     [TD_TERMINATOR]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, terminator_finished, terminator_reset),
     [TD_LSFT_CAPS]   = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_LSFT_finished, dance_LSFT_reset),
 };
 
 // https://docs.qmk.fm/#/feature_tap_dance 
-uint8_t cur_dance(qk_tap_dance_state_t *state) {
+uint8_t cur_dance(tap_dance_state_t *state) {
     if (state->count == 1) {
         if (state->interrupted || !state->pressed) return SINGLE_TAP;
         // Key has not been interrupted, but the key is still held. Means you want to send a 'HOLD'.
@@ -39,7 +39,7 @@ uint8_t cur_dance(qk_tap_dance_state_t *state) {
     } else return 8; // Magic number. At some point this method will expand to work for more presses
 }
 
-void terminator_finished(qk_tap_dance_state_t *state, void *user_data) {
+void terminator_finished(tap_dance_state_t *state, void *user_data) {
     xtap_state.state = cur_dance(state);
     switch (xtap_state.state) {
         case SINGLE_TAP:  register_code16(LALT(KC_F4));  break;
@@ -54,7 +54,7 @@ void terminator_finished(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
-void terminator_reset(qk_tap_dance_state_t *state, void *user_data) {
+void terminator_reset(tap_dance_state_t *state, void *user_data) {
     switch (xtap_state.state) {
         case SINGLE_TAP:  unregister_code16(LALT(KC_F4));  break;
         case SINGLE_HOLD: unregister_code(KC_RALT);        break;
@@ -66,7 +66,7 @@ void terminator_reset(qk_tap_dance_state_t *state, void *user_data) {
     xtap_state.state = 0;
 }
 
-void dance_cln_finished(qk_tap_dance_state_t *state, void *user_data) {
+void dance_cln_finished(tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
         register_code(KC_SCLN);
     } else {
@@ -74,7 +74,7 @@ void dance_cln_finished(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
-void dance_cln_reset(qk_tap_dance_state_t *state, void *user_data) {
+void dance_cln_reset(tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
         unregister_code(KC_SCLN);
     } else {
@@ -82,7 +82,7 @@ void dance_cln_reset(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
-    void dance_LSFT_finished(qk_tap_dance_state_t *state, void *user_data) {
+    void dance_LSFT_finished(tap_dance_state_t *state, void *user_data) {
         if (state->count == 1 || keymap_config.no_gui) {
             register_code16(KC_LSFT);
         } else {
@@ -90,7 +90,7 @@ void dance_cln_reset(qk_tap_dance_state_t *state, void *user_data) {
         }
     }
 
-    void dance_LSFT_reset(qk_tap_dance_state_t *state, void *user_data) {
+    void dance_LSFT_reset(tap_dance_state_t *state, void *user_data) {
         if (state->count == 1 || keymap_config.no_gui) {
             unregister_code16(KC_LSFT);
         } else {

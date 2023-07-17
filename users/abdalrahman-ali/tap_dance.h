@@ -26,12 +26,12 @@ enum {
 
 
 // https://docs.qmk.fm/#/feature_tap_dance 
-uint8_t cur_dance(qk_tap_dance_state_t *state);
+uint8_t cur_dance(tap_dance_state_t *state);
 
-void terminator_finished(qk_tap_dance_state_t *state, void *user_data);
-void terminator_reset(qk_tap_dance_state_t *state, void *user_data);
-void dance_cln_finished(qk_tap_dance_state_t *state, void *user_data);
-void dance_cln_reset(qk_tap_dance_state_t *state, void *user_data);
-void dance_LSFT_finished(qk_tap_dance_state_t *state, void *user_data);
-void dance_LSFT_reset(qk_tap_dance_state_t *state, void *user_data);
+void terminator_finished(tap_dance_state_t *state, void *user_data);
+void terminator_reset(tap_dance_state_t *state, void *user_data);
+void dance_cln_finished(tap_dance_state_t *state, void *user_data);
+void dance_cln_reset(tap_dance_state_t *state, void *user_data);
+void dance_LSFT_finished(tap_dance_state_t *state, void *user_data);
+void dance_LSFT_reset(tap_dance_state_t *state, void *user_data);
 
