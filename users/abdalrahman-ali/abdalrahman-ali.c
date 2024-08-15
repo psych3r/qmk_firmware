@@ -21,7 +21,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record)
             break;
         case PASS_MACRO:
             if (record->event.pressed)
-                SEND_STRING("letmeinbtsh1@\n"/* SS_TAP(X_ENT)*/);
+                SEND_STRING("L3tm3inbia55@12\n"/* SS_TAP(X_ENT)*/);
             break;
         default:
             return true; // Process all other keycodes normally
