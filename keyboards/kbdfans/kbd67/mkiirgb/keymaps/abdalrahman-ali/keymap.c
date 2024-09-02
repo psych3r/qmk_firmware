@@ -52,7 +52,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
         _______, _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
         _______, KC_LEFT, KC_RIGHT, KC_UP,   KC_DOWN, _______, KC_LEFT, KC_DOWN, KC_UP,  KC_RIGHT, PASS_MACRO, _______,          _______,  _______,
         _______, _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______,          _______, KC_VOLU, _______,
-        _______, _______, _______,  _______, _______, _______,                                                       _______, KC_VOLD, DF(_game)
+        _______, _______, _______,                             _______,                   TERM,    _______,          _______, KC_VOLD, DF(_game)
     ),
 
     [_mods] = LAYOUT_65_ansi_blocker(
@@ -60,7 +60,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
         _______, _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
         _______, _______, _______,  _______, _______, _______, KC_BSPC, KC_END,  KC_HOME,  KC_DEL,  KC_ENT, _______,          _______, _______,
         _______, _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______,          KC_RSFT, KC_VOLU, _______,
-        _______, _______, _______,  _______, _______, _______,                                                       _______, KC_VOLD, _______
+        _______, _______, _______,                             _______,                   TERM,    _______,          _______, KC_VOLD, _______
     ),
 
     [_numpad] = LAYOUT_65_ansi_blocker(
@@ -124,7 +124,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max)
                 for (uint8_t col = 0; col < MATRIX_COLS; ++col)
                 {
                     uint8_t index = g_led_config.matrix_co[row][col];
-                    if (index >= led_min && index <= led_max 
+                    if (index >= led_min && index <= led_max
                     && index != NO_LED && keymap_key_to_keycode(_mods, (keypos_t) {col, row}) > KC_TRNS)
                     {
                         rgb_matrix_set_color(index, RGB_CHARTREUSE);
