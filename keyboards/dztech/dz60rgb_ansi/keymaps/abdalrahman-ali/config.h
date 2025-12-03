@@ -10,9 +10,9 @@
 //#define PERMISSIVE_HOLD
 
 // Prevent normal rollover on alphas from accidentally triggering mods.
-#define IGNORE_MOD_TAP_INTERRUPT
+// #define IGNORE_MOD_TAP_INTERRUPT // => Now default behavior, has to be commented to compile...
 // Enable rapid switch from tap to hold, disables double tap hold auto-repeat.
-// tab moded key then hold it 
+// tab moded key then hold it
 // TAPPING_FORCE_HOLD will break anything that uses tapping toggles (Such as the TT layer keycode, and the One Shot Tap Toggle).
 // there's a per key variant.
 // #define TAPPING_FORCE_HOLD
