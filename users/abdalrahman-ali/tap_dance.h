@@ -7,8 +7,14 @@
 enum tap_dance_keys {
     TD_CLN = 1,
     TD_TERMINATOR,
-    TD_LSFT_CAPS
+    TD_LSFT_CAPS,
+    TD_COUNT // tap_dance_actions array size
 };
+
+// Declare with explicit size
+#ifdef TAP_DANCE_ENABLE
+    extern tap_dance_action_t tap_dance_actions[TD_COUNT];
+#endif
 
 typedef struct {
     bool is_press_action;
@@ -25,7 +31,7 @@ enum {
 };
 
 
-// https://docs.qmk.fm/#/feature_tap_dance 
+// https://docs.qmk.fm/#/feature_tap_dance
 uint8_t cur_dance(tap_dance_state_t *state);
 
 void terminator_finished(tap_dance_state_t *state, void *user_data);
