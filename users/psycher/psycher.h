@@ -1,4 +1,4 @@
-/* Copyright 2022 Abdalrahman Ali @abdalrahman-ali */
+/* Copyright 2022 Abdalrahman Ali @psycher */
 #pragma once
 #include QMK_KEYBOARD_H
 

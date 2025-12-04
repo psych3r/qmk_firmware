@@ -1,7 +1,7 @@
-/* Copyright 2022 Abdalrahman Ali @abdalrahman-ali */
+/* Copyright 2022 Abdalrahman Ali @psycher */
 
 #pragma once
-#include "abdalrahman-ali.h"
+#include "psycher.h"
 
 // tap dance enum
 enum tap_dance_keys {

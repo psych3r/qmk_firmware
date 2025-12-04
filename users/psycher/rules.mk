@@ -1,4 +1,4 @@
-SRC += abdalrahman-ali.c
+SRC += psycher.c
 
 ifdef TAP_DANCE_ENABLE
     SRC += tap_dance.c

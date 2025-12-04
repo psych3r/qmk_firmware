@@ -1,6 +1,6 @@
-/* Copyright 2022 Abdalrahman Ali @abdalrahman-ali */
+/* Copyright 2022 Abdalrahman Ali @psycher */
 
-#include "abdalrahman-ali.h"
+#include "psycher.h"
 
 bool process_record_user(uint16_t keycode, keyrecord_t* record)
 {

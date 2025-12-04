@@ -1,4 +1,4 @@
-/* Copyright 2022 Abdalrahman Ali @abdalrahman-ali */
+/* Copyright 2022 Abdalrahman Ali @psycher */
 
 #include "tap_dance.h"
 
@@ -15,7 +15,7 @@ tap_dance_action_t tap_dance_actions[] = {
     [TD_LSFT_CAPS]   = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_LSFT_finished, dance_LSFT_reset),
 };
 
-// https://docs.qmk.fm/#/feature_tap_dance 
+// https://docs.qmk.fm/#/feature_tap_dance
 uint8_t cur_dance(tap_dance_state_t *state) {
     if (state->count == 1) {
         if (state->interrupted || !state->pressed) return SINGLE_TAP;
