@@ -1,7 +1,11 @@
 SRC += psycher.c
 
-ifdef TAP_DANCE_ENABLE
+ifeq ($(strip $(TAP_DANCE_ENABLE)), yes)
     SRC += tap_dance.c
+endif
+
+ifeq ($(strip $(RGB_MATRIX_ENABLE)), yes)
+    SRC += rgb.c
 endif
 
 ifeq ($(strip $(IDLE_TIMEOUT_ENABLE)), yes)

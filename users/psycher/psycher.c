@@ -29,26 +29,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record)
     return true;
 }
 
-#ifdef RGB_MATRIX_ENABLE
-
-static bool rgb_nightmode = false;
-
-// Turn on/off NUM LOCK if current state is different
-void activate_rgb_nightmode (bool turn_on)
-{
-    if (rgb_nightmode != turn_on)
-        rgb_nightmode = !rgb_nightmode;
-}
-
-bool get_rgb_nightmode(void) { return rgb_nightmode; }
-
-void set_array_rgb(const uint8_t* led_array, uint8_t arr_size, uint8_t r, uint8_t g, uint8_t b)
-{
-    for (uint8_t i = 0; i < arr_size; i++) rgb_matrix_set_color(led_array[i], r, g, b);
-}
-
-#endif
-
 // TIMEOUTS
 #ifdef IDLE_TIMEOUT_ENABLE
 

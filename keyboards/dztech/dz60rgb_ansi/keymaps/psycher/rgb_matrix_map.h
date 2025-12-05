@@ -25,8 +25,12 @@ enum led_location_map {
     LED_RFN, LED_RCTL,  LED_FN,   LED_RALT,                       LED_SPC,                       LED_LALT, LED_LGUI, LED_LCTL
 };
 
+// Must define the arrays' lengths in config.h
+const uint8_t LED_LIST_FN[]        = { LED_FN };
+const uint8_t LED_LIST_CAPS[]      = { LED_CAPS };
 const uint8_t LED_LIST_LOL[]       = { LED_Q  , LED_W, LED_E, LED_R, LED_D, LED_F };
 const uint8_t LED_LIST_WASD[]      = { LED_W  , LED_A, LED_S, LED_D };
+const uint8_t LED_LIST_ARROWS[]    = { LED_I, LED_J, LED_K, LED_L };
 const uint8_t LED_LIST_HJKL[]      = { LED_H  , LED_J, LED_K, LED_L };
 const uint8_t LED_LIST_NUMROW[]    = { LED_ESC, LED_1, LED_2, LED_3, LED_4, LED_5, LED_6, LED_7, LED_8, LED_9, LED_0, LED_MINUS, LED_EQ,  LED_BS};
 const uint8_t LED_LIST_QWERTYROW[] = { LED_TAB, LED_Q, LED_W, LED_E, LED_R, LED_T, LED_Y, LED_U, LED_I, LED_O, LED_P, LED_OSB,   LED_CSB, LED_BSLS};

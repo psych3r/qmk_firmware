@@ -6,6 +6,10 @@
 #include "tap_dance.h"
 #endif
 
+#ifdef RGB_MATRIX_ENABLE
+#include "rgb.h"
+#endif
+
 enum my_layers {
     _base = 0,
     _game,
@@ -49,15 +53,6 @@ enum custom_keycodes {
 #define UP__ RSFT_T(KC_UP)
 #define LEFT LT(_vrgb, KC_LEFT)
 #define DWNN RCTL_T(KC_DOWN)
-
-
-#ifdef RGB_MATRIX_ENABLE
-
-void activate_rgb_nightmode (bool turn_on);
-bool get_rgb_nightmode(void);
-void set_array_rgb(const uint8_t* led_array, uint8_t arr_size, uint8_t r, uint8_t g, uint8_t b);
-
-#endif
 
 // IDLE TIMEOUTS
 #ifdef IDLE_TIMEOUT_ENABLE

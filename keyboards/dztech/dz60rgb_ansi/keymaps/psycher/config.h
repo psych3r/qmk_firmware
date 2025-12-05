@@ -24,3 +24,13 @@
 
 // default is 5
 #define TAPPING_TOGGLE 2
+
+#define LED_LIST_FN_LEN        1
+#define LED_LIST_CAPS_LEN      1
+#define LED_LIST_LOL_LEN       6
+#define LED_LIST_WASD_LEN      4
+#define LED_LIST_ARROWS_LEN    4
+#define LED_LIST_HJKL_LEN      4
+#define LED_LIST_NUMROW_LEN    14
+#define LED_LIST_QWERTYROW_LEN 14
+#define LED_LIST_NUMPAD_LEN    12
