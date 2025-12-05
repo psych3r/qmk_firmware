@@ -43,6 +43,8 @@ enum custom_keycodes {
 // Tmux, hjkl and mods
 #define TMUX_PRE LCTL_T(MT_TMUXPRE)
 #define TMUX LCTL_T(TMUX_PRE)
+// #define TMUX LCTL_T( C(KC_SPC) ) // does not work becaust mod-tap only support basic keycodes to tap
+
 #define HJKL LT(_hjkl, KC_W)
 #define MODS LT(_mods, KC_Q)
 #define TERM TD(TD_TERMINATOR)
