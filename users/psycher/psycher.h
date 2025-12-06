@@ -10,6 +10,8 @@
 #include "rgb.h"
 #endif
 
+#include "layout.h"
+
 enum my_layers {
     _base = 0,
     _game,
@@ -55,6 +57,10 @@ enum custom_keycodes {
 #define UP__ RSFT_T(KC_UP)
 #define LEFT LT(_vrgb, KC_LEFT)
 #define DWNN RCTL_T(KC_DOWN)
+// DWNN RCTL_T(KC_DOWN) might need to be a tap dance,
+//           i need tap-hold -> down arrow
+//           same with LT keys -> i need home row mods behavior to repeat arrow keys!
+
 
 // IDLE TIMEOUTS
 #ifdef IDLE_TIMEOUT_ENABLE
@@ -67,4 +73,3 @@ enum custom_keycodes {
     void timeout_update_threshold(bool increase);
     void timeout_tick_timer(void);
 #endif  //IDLE_TIMEOUT_ENABLE
-

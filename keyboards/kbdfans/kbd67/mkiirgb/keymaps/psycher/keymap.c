@@ -23,46 +23,11 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t* record)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =
 {
-    [_base] = LAYOUT_65_ansi_blocker(
-        QK_GESC, KC_1,    KC_2,    KC_3,   KC_4,   KC_5,   KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC, KC_DEL,
-        KC_TAB,  MODS,    HJKL,    KC_E,   KC_R,   KC_T,   KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS, KC_HOME,
-        TMUX,    GUIA,    ALTS,    CTLD,   SFTF,   KC_G,   KC_H,    SFTJ,    CTLK,    ALTL,    GUIN,    KC_QUOT,          KC_ENT,  KC_END,
-        SCAP,    KC_Z,    KC_X,    KC_C,   KC_V,   KC_B,   KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,          KC_RSFT, KC_UP,   TT(_hjkl),
-        KC_LCTL, KC_LGUI, KC_LALT,                         KC_SPC,                  TT(_vrgb), KC_RCTL,          KC_LEFT, KC_DOWN, KC_RGHT
-    ),
-
-    [_game] = LAYOUT_65_ansi_blocker(
-        QK_GESC, KC_1,    KC_2,    KC_3,   KC_4,    KC_5,   KC_6,    KC_7,    KC_8,      KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC, KC_DEL,
-        KC_TAB,  KC_Q,    KC_W,    KC_E,   KC_R,    KC_T,   KC_Y,    KC_U,    KC_I,      KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS, KC_HOME,
-        KC_CAPS, KC_A,    KC_S,    KC_D,   KC_F,    KC_G,   KC_H,    KC_J,    KC_K,      KC_L,    KC_SCLN, KC_QUOT,          KC_ENT,  KC_END,
-        KC_LSFT, KC_Z,    KC_X,    KC_C,   KC_V,    KC_B,   KC_N,    KC_M,    KC_COMM,   KC_DOT,  KC_SLSH,          KC_RSFT, KC_UP, DF(_base),
-        KC_LCTL, KC_LGUI, KC_LALT,                          KC_SPC,           TT(_vrgb), KC_RCTL,                   KC_LEFT, KC_DOWN, KC_RGHT
-    ),
-
-    [_vrgb] = LAYOUT_65_ansi_blocker(
-        KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,   KC_F12,  KC_DEL,  _______,
-        _______, RM_TOGG, RM_NEXT, RM_HUEU, RM_HUED, RM_SATU, RM_SATD, RM_VALU, RM_VALD, _______, KC_PSCR, KC_SCRL,  KC_PAUS, QK_BOOT, KC_PGUP,
-        _______, RM_SPDU, RM_SPDD, _______, _______, _______, _______, _______, _______, _______, _______, _______,           EE_CLR, KC_PGDN,
-        _______, KC_VOLD, KC_VOLU, KC_MUTE, _______, _______, _______, _______, _______, _______, _______,       TT(_numpad), KC_VOLU, KC_MUTE,
-        _______, _______, _______,                            _______,                   _______, TERM,              KC_MPRV, KC_VOLD, KC_MNXT
-    ),
-
-    [_hjkl] = LAYOUT_65_ansi_blocker(
-        KC_PWR,  _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-        _______, _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-        _______, KC_LEFT, KC_RIGHT, KC_UP,   KC_DOWN, _______, KC_LEFT, KC_DOWN, KC_UP,  KC_RIGHT, PASS_MACRO, _______,          _______,  _______,
-        _______, _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______,          _______, KC_VOLU, _______,
-        _______, _______, _______,                             _______,                   TERM,    _______,          _______, KC_VOLD, DF(_game)
-    ),
-
-    [_mods] = LAYOUT_65_ansi_blocker(
-        KC_PWR,  _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-        _______, _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-        _______, _______, _______,  _______, _______, _______, KC_BSPC, KC_END,  KC_HOME,  KC_DEL,  KC_ENT, _______,          _______, _______,
-        _______, _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______,          KC_RSFT, KC_VOLU, _______,
-        _______, _______, _______,                             _______,                   TERM,    _______,          _______, KC_VOLD, _______
-    ),
-
+    [_base] = LAYOUT_wrapper(LAYOUT_65_ansi_blocker, _BASE_ROW1_65, _BASE_ROW2_65, _BASE_ROW3_65, _BASE_ROW4_65, _BASE_ROW5_65_2mod ),
+    [_game] = LAYOUT_wrapper(LAYOUT_65_ansi_blocker, _GAME_ROW1_65, _GAME_ROW2_65, _GAME_ROW3_65, _GAME_ROW4_65, _GAME_ROW5_65_2mod ),
+    [_vrgb] = LAYOUT_wrapper(LAYOUT_65_ansi_blocker, _VRGB_ROW1_65, _VRGB_ROW2_65, _VRGB_ROW3_65, _VRGB_ROW4_65, _VRGB_ROW5_65_2mod ),
+    [_hjkl] = LAYOUT_wrapper(LAYOUT_65_ansi_blocker, _HJKL_ROW1_65, _HJKL_ROW2_65, _HJKL_ROW3_65, _HJKL_ROW4_65, _HJKL_ROW5_65_2mod ),
+    [_mods] = LAYOUT_wrapper(LAYOUT_65_ansi_blocker, _MODS_ROW1_65, _MODS_ROW2_65, _MODS_ROW3_65, _MODS_ROW4_65, _MODS_ROW5_65_2mod ),
     [_numpad] = LAYOUT_65_ansi_blocker(
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
         _______, _______, _______, _______, _______, _______, _______, _______, KC_7,    KC_8,    KC_9,    _______, _______, _______, _______,

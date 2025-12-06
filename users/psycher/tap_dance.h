@@ -16,28 +16,33 @@ enum tap_dance_keys {
     extern tap_dance_action_t tap_dance_actions[TD_COUNT];
 #endif
 
+typedef enum {
+    TD_NONE,
+    TD_UNKNOWN,
+    TD_SINGLE_TAP,
+    TD_SINGLE_HOLD,
+    TD_DOUBLE_TAP,
+    TD_DOUBLE_HOLD,
+    TD_DOUBLE_SINGLE_TAP, // Send two single taps
+    TD_TRIPLE_TAP,
+    TD_TRIPLE_HOLD
+} td_state_t;
+
 typedef struct {
     bool is_press_action;
-    uint8_t state;
-} tap;
-enum {
-    SINGLE_TAP = 1,
-    SINGLE_HOLD,
-    DOUBLE_TAP,
-    DOUBLE_HOLD,
-    DOUBLE_SINGLE_TAP, // Send two single taps
-    TRIPLE_TAP,
-    TRIPLE_HOLD
-};
+    td_state_t state;
+} td_tap_t;
 
 
 // https://docs.qmk.fm/#/feature_tap_dance
-uint8_t cur_dance(tap_dance_state_t *state);
+td_state_t cur_dance(tap_dance_state_t *state);
+
+// void terminator_exec(tap_dance_state_t *state, void *user_data);
 
 void terminator_finished(tap_dance_state_t *state, void *user_data);
 void terminator_reset(tap_dance_state_t *state, void *user_data);
-void dance_cln_finished(tap_dance_state_t *state, void *user_data);
-void dance_cln_reset(tap_dance_state_t *state, void *user_data);
-void dance_LSFT_finished(tap_dance_state_t *state, void *user_data);
-void dance_LSFT_reset(tap_dance_state_t *state, void *user_data);
 
+// void dance_cln_finished(tap_dance_state_t *state, void *user_data);
+// void dance_cln_reset(tap_dance_state_t *state, void *user_data);
+// void dance_LSFT_finished(tap_dance_state_t *state, void *user_data);
+// void dance_LSFT_reset(tap_dance_state_t *state, void *user_data);

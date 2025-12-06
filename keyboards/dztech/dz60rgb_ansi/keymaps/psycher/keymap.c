@@ -5,59 +5,19 @@
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record)
 {
     switch (keycode) {
-        case GUIA:
-            return TAPPING_TERM + 50; break;
-        case ALTS:
-            return TAPPING_TERM + 75; break;
-        case CTLD:
-            return TAPPING_TERM + 50; break;
-        case SFTF:
-            return TAPPING_TERM - 25; break;
-        case GUIN:
-            return TAPPING_TERM + 50; break;
-        default:
-            return TAPPING_TERM;
+        case GUIA: return TAPPING_TERM + 50; break;
+        case ALTS: return TAPPING_TERM + 75; break;
+        case CTLD: return TAPPING_TERM + 50; break;
+        case SFTF: return TAPPING_TERM - 25; break;
+        case GUIN: return TAPPING_TERM + 50; break;
+        default: return TAPPING_TERM;
     }
 }
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [_base] = LAYOUT_60_ansi(
-        QK_GESC, KC_1,    KC_2,    KC_3,   KC_4,   KC_5,   KC_6,   KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC,
-        KC_TAB,  MODS,    HJKL,    KC_E,   KC_R,   KC_T,   KC_Y,   KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS,
-        TMUX,    GUIA,    ALTS,    CTLD,   SFTF,   KC_G,   KC_H,   SFTJ,    CTLK,    ALTL,    GUIN,    KC_QUOT, KC_ENT ,
-        SCAP,    KC_Z,    KC_X,    KC_C,   KC_V,   KC_B,   KC_N,   KC_M,    KC_COMM, KC_DOT,  KC_SLSH, UP__,
-        KC_LCTL, KC_LGUI, KC_LALT, KC_SPC, TERM,   LEFT,   DWNN,   RGHT
-    ),
-
-    [_game] = LAYOUT_60_ansi(
-        QK_GESC, KC_1,    KC_2,    KC_3,   KC_4,    KC_5,   KC_6,    KC_7,   KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC,
-        KC_TAB,  KC_Q,    KC_W,    KC_E,   KC_R,    KC_T,   KC_Y,    KC_U,   KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS,
-        KC_CAPS, KC_A,    KC_S,    KC_D,   KC_F,    KC_G,   KC_H,    KC_J,   KC_K,    KC_L,    KC_SCLN, KC_QUOT, KC_ENT,
-        KC_LSFT, KC_Z,    KC_X,    KC_C,   KC_V,    KC_B,   KC_N,    KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
-        KC_LCTL, KC_LGUI, KC_LALT, KC_SPC, KC_RALT, TT(_hjkl),  KC_RCTL, DF(_base)
-    ),
-
-    [_vrgb] = LAYOUT_60_ansi(
-        KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_DEL,
-        _______, RM_TOGG, _______, RM_HUEU, RM_HUED, RM_SATU, RM_SATD, RM_VALU, RM_VALD, RM_NEXT, _______, _______, _______, QK_BOOT,
-        KC_CAPS, _______, _______, _______, _______, _______, _______, _______, RM_SPDU, RM_SPDD, _______, _______, _______,
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-        _______, _______, _______, _______, _______, _______, _______, DF(_game)
-    ),
-
-    [_hjkl] = LAYOUT_60_ansi(
-        KC_PWR,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,    KC_F10,  KC_F11,  KC_F12,   KC_DEL,
-        _______, _______, KC_UP,   _______, _______, _______, KC_CALC, _______, KC_INS,  _______,  KC_PSCR, KC_SCRL, KC_PAUS,  KC_HOME,
-        _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, KC_HOME, KC_PGUP, KC_END,
-        KC_MPRV, KC_VOLD, KC_VOLU, KC_MUTE, _______, _______, NK_TOGG, _______, _______,  KC_END,  KC_VOLU, KC_MUTE,
-        _______, _______, _______, _______, KC_LEFT, KC_VOLD, KC_RIGHT, _______
-    ),
-
-    [_mods] = LAYOUT_60_ansi(
-        KC_PWR,  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_BSPC,
-        KC_TAB,  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_BSLS,
-        TMUX,    _______, _______, _______, _______, _______, KC_HOME, KC_BSPC, KC_DEL,  KC_END,  KC_ENT,  _______, KC_ENT,
-        KC_LSFT, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_RSFT,
-        KC_LCTL, KC_LGUI, KC_LALT, _______, _______, _______, _______, _______
-    ),
+    [_base] = LAYOUT_wrapper(LAYOUT_60_ansi, _BASE_ROW1, _BASE_ROW2, _BASE_ROW3, _BASE_ROW4_60, _BASE_ROW5_60),
+    [_game] = LAYOUT_wrapper(LAYOUT_60_ansi, _GAME_ROW1, _GAME_ROW2, _GAME_ROW3, _GAME_ROW4,    _GAME_ROW5_60),
+    [_vrgb] = LAYOUT_wrapper(LAYOUT_60_ansi, _VRGB_ROW1, _VRGB_ROW2, _VRGB_ROW3, _VRGB_ROW4_60, _VRGB_ROW5_60),
+    [_hjkl] = LAYOUT_wrapper(LAYOUT_60_ansi, _HJKL_ROW1, _HJKL_ROW2, _HJKL_ROW3, _HJKL_ROW4,    _HJKL_ROW5),
+    [_mods] = LAYOUT_wrapper(LAYOUT_60_ansi, _MODS_ROW1, _MODS_ROW2, _MODS_ROW3, _MODS_ROW4,    _MODS_ROW5),
 };
