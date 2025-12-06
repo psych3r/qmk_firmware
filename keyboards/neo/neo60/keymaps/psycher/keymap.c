@@ -36,3 +36,33 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 };
 
+// Add this function to your keymap.c file
+// This will control the Caps Lock LED based on layer state
+layer_state_t layer_state_set_user(layer_state_t state) {
+    // Turn on Caps Lock LED when layer 1 is active, off otherwise
+    writePin(LED_CAPS_LOCK_PIN, layer_state_cmp(state, _game));
+    // writePin(LED_CAPS_LOCK_PIN, !layer_state_cmp(state, 1));
+    return state;
+}
+
+// [] There should be smarter ways to do this in QMK
+bool led_update_user(led_t led_state) {
+    // Disable the default Caps Lock LED behavior
+    // Return false to prevent QMK from controlling the LED
+    return false;
+}
+
+// Alternative method if LED_CAPS_LOCK_PIN is not defined:
+// Use this if the above doesn't work
+// layer_state_t layer_state_set_user(layer_state_t state) {
+//     // Check if layer 1 is active
+//     if (layer_state_cmp(state, 1)) {
+//         // Turn on Caps Lock LED
+//         gpio_set_pin_output(LED_CAPS_LOCK_PIN);
+//         gpio_write_pin_low(LED_CAPS_LOCK_PIN);  // or gpio_write_pin_high depending on your LED
+//     } else {
+//         // Turn off Caps Lock LED
+//         gpio_write_pin_high(LED_CAPS_LOCK_PIN);  // or gpio_write_pin_low depending on your LED
+//     }
+//     return state;
+// }
