@@ -25,8 +25,9 @@
 #define _BASE_ROW5_65_3mod _BASE_ROW5, TT(_vrgb), KC_RCTL, KC_LEFT, KC_DOWN, KC_RGHT
 #define _BASE_ROW5_65_2mod _BASE_ROW5, TT(_vrgb),          KC_LEFT, KC_DOWN, KC_RGHT
 
-#define _BASE_ROW4_60 _BASE_ROW4, UP__
-#define _BASE_ROW5_60 _BASE_ROW5, LEFT, DWNN, RGHT
+#define _BASE_ROW4_60             _BASE_ROW4, UP__
+#define _BASE_ROW4_60_split_rshft _BASE_ROW4, UP__, TT(_hjkl)
+#define _BASE_ROW5_60             _BASE_ROW5, LEFT, DWNN, RGHT
 
 // ============================================================================
 // LAYER: _game
@@ -36,7 +37,7 @@
 #define _GAME_ROW2 KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,      KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS
 #define _GAME_ROW3 KC_CAPS, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,      KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, KC_ENT
 #define _GAME_ROW4 KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,      KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT
-#define _GAME_ROW5 KC_LCTL, KC_LGUI, KC_LALT, KC_SPC,  KC_RALT, TT(_vrgb)
+#define _GAME_ROW5 KC_LCTL, KC_LGUI, KC_LALT,                              KC_SPC,                             KC_RALT, TT(_vrgb)
 
 #define _GAME_ROW1_65      _GAME_ROW1, KC_DEL
 #define _GAME_ROW2_65      _GAME_ROW2, KC_HOME
@@ -45,7 +46,8 @@
 #define _GAME_ROW5_65_3mod _GAME_ROW5, KC_RCTL, KC_LEFT, KC_DOWN, KC_RGHT
 #define _GAME_ROW5_65_2mod _GAME_ROW5,          KC_LEFT, KC_DOWN, KC_RGHT
 
-#define _GAME_ROW5_60 _GAME_ROW5, KC_RCTL, DF(_base)
+#define _GAME_ROW4_60_split_rshft _GAME_ROW4, DF(_base)
+#define _GAME_ROW5_60             _GAME_ROW5, KC_RCTL, DF(_base)
 
 // ============================================================================
 // LAYER: _vrgb
@@ -72,7 +74,7 @@
 #define _VRGB_ROW2  RM_TOGG, _______, RM_SATU, _______, _______, _______, _______, _______, _______, _______, KC_MPLY, RM_PREV, RM_NEXT, QK_BOOT
 #define _VRGB_ROW3  KC_CAPS, RM_HUED, RM_SATD, RM_HUEU, _______, _______, RM_SPDD, RM_VALD, RM_VALU, RM_SPDU, _______, _______, _______
 #define _VRGB_ROW4  _______, _______, _______, _______, _______, _______, _______, KC_MUTE, KC_MPRV, KC_MNXT, TG(_game)
-#define _VRGB_ROW5  _______, _______, _______,          _______,                   _______
+#define _VRGB_ROW5  _______, _______, _______,                            _______,                            _______
 
 #define _VRGB_LDR  KC_BRID, KC_VOLD, KC_BRIU
 
@@ -83,8 +85,9 @@
 #define _VRGB_ROW5_65_2mod _VRGB_ROW5, _______, _VRGB_LDR
 #define _VRGB_ROW5_65_3mod _VRGB_ROW5, _______, _______, _VRGB_LDR
 
-#define _VRGB_ROW4_60      _VRGB_ROW4, KC_VOLU
-#define _VRGB_ROW5_60      _VRGB_ROW5, _VRGB_LDR
+#define _VRGB_ROW4_60              _VRGB_ROW4, KC_VOLU
+#define _VRGB_ROW4_60_split_rshft  _VRGB_ROW4, KC_VOLU, KC_MUTE
+#define _VRGB_ROW5_60              _VRGB_ROW5, _VRGB_LDR
 
 // ============================================================================
 // LAYER: _hjkl
@@ -101,7 +104,7 @@
 #define _HJKL_ROW2  _HJKL_ROW1
 #define _HJKL_ROW3  _______, _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN,   KC_UP, KC_RIGHT, PASS_MACRO, _______, _______
 #define _HJKL_ROW4  _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______
-#define _HJKL_ROW5  _______, _______, _______, _______, _______, _______, _______, _______
+#define _HJKL_ROW5  _______, _______, _______,                            _______,                             _______, _______, _______, _______
 
 #define _HJKL_ROW1_65      _HJKL_ROW1, _______
 #define _HJKL_ROW2_65      _HJKL_ROW2, _______
@@ -109,6 +112,8 @@
 #define _HJKL_ROW4_65      _HJKL_ROW1
 #define _HJKL_ROW5_65_2mod _HJKL_ROW5, _______
 #define _HJKL_ROW5_65_3mod _HJKL_ROW5, _______, _______
+
+#define _HJKL_ROW4_60_split_rshft _HJKL_ROW4, _______
 
 // ============================================================================
 // LAYER: _mods
@@ -123,7 +128,7 @@
 #define _MODS_ROW2  _MODS_ROW1
 #define _MODS_ROW3  _______, _______, _______, _______, _______, _______, KC_BSPC,  KC_END, KC_HOME, KC_DEL,  KC_ENT,  _______, _______
 #define _MODS_ROW4  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
-#define _MODS_ROW5  _______, _______, _______, _______, _______, _______, _______, _______
+#define _MODS_ROW5  _______, _______, _______,                            _______,                            _______, _______, _______, _______
 
 #define _MODS_ROW1_65      _MODS_ROW1, _______
 #define _MODS_ROW2_65      _MODS_ROW2, _______
@@ -132,4 +137,4 @@
 #define _MODS_ROW5_65_2mod _MODS_ROW5, _______
 #define _MODS_ROW5_65_3mod _MODS_ROW5, _______, _______
 
-
+#define _MODS_ROW4_60_split_rshft _MODS_ROW4, _______
