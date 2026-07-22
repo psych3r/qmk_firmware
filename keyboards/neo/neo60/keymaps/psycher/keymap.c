@@ -2,6 +2,74 @@
 #include "debounce.h"
 #include "psycher.h"
 
+/* ============================================================================
+ * LAYER SWITCHING CHEATSHEET
+ * ============================================================================
+ * Layers:  _base (0) -> everyday typing, home-row mods
+ *          _game (1) -> plain QWERTY, no home-row mods
+ *          _vrgb (2) -> FN1: F-keys, media, RGB
+ *          _hjkl (3) -> FN2: arrow cluster on hold
+ *          _mods (4) -> FN:  editing cluster (BSPC/HOME/END/DEL/ENT) on hold
+ *
+ * Four DIFFERENT switching mechanisms are used below — the confusing part is
+ * that they behave differently, so here's what each one actually does:
+ *
+ *   HOLD keys (momentary, like a normal Fn key)
+ *   -------------------------------------------
+ *   - MODS  (row2, sits where "Q" is)  -> hold  => _mods active while held
+ *   - HJKL  (row2, sits where "W" is)  -> hold  => _hjkl active while held
+ *     These are custom dual-role keys from psycher.h: tap = normal Q/W,
+ *     hold = the layer. Release and you're back to whatever layer you held
+ *     it from (_base or _game).
+ *
+ *   TT() keys (Tap-Toggle: tap once = nothing/passthrough, HOLD = momentary,
+ *              but tap TWICE quickly = layer LOCKS ON until you tap it again)
+ *   ------------------------------------------------------------------------
+ *   - TT(_hjkl) -> split-rshift key on _base's bottom row.
+ *   - TT(_vrgb) -> the key right after Spacebar on _game's bottom row
+ *                  (in the RAlt spot).
+ *   NOTE: lining up _base's row5 against _game's row5 key-by-key, the key in
+ *   _base that sits in the SAME physical spot as _game's TT(_vrgb) is
+ *   actually LEFT (a plain left-arrow, no layer function). And _base's TERM
+ *   key lines up with _game's KC_RALT spot instead — a single ordinary key,
+ *   not a merged RAlt+TT(_vrgb) combo like I said earlier (that was wrong).
+ *   So as far as I can tell from this file alone, _base has NO key that
+ *   reaches _vrgb directly, and _base also has no DF(_game)/TG(_game)
+ *   anywhere. Either TERM is a custom psycher.h key that secretly handles
+ *   entry into _game/_vrgb (tap-dance, hold, etc.), or there's another path
+ *   I'm not seeing — worth checking psycher.h for what TERM actually does.
+ *
+ *   TG() key (Toggle: single tap flips the layer fully on/off, no holding)
+ *   ------------------------------------------------------------------------
+ *   - TG(_game) -> sits on _vrgb's bottom-ish row (right side).
+ *     Tap once from _vrgb to jump straight into _game (fully on, not just
+ *     while held). Tap again while in _game (if you find this same key on
+ *     that layer) to flip back off.
+ *
+ *   DF() keys (Default Layer: changes your BASE layer, not just active one —
+ *              this is the "permanent until changed again" switch)
+ *   ------------------------------------------------------------------------
+ *   - DF(_base) -> appears TWICE on _game: the split-rshift key (row4) and
+ *     the bottom-right key (row5). Tap either one to make _base your
+ *     default layer again (this is how you escape _game layer entirely).
+ *
+ * TL;DR — quick recovery paths:
+ *   Stuck in _game?  -> tap DF(_base) (bottom row, either the split-rshift
+ *                       key or the bottom-right corner key).
+ *   Stuck in _vrgb?  -> if you got there by holding/double-tapping TERM or
+ *                       TT(_vrgb), release or tap the same key again to
+ *                       unlock. From _vrgb you can also tap TG(_game) to hop
+ *                       into _game (which then has its own DF(_base) exits).
+ *   Stuck in _hjkl/_mods? -> these are hold-only from MODS/HJKL keys (Q/W),
+ *                       so just release the key and you're back to normal.
+ *                       (TT(_hjkl) on _base's split-rshift key is the
+ *                       exception — double-tap it again to unlock.)
+ *   How do you even get to _game/_vrgb from _base in the first place? ->
+ *                       unclear from this file; likely handled by the
+ *                       custom TERM key in psycher.h. Worth confirming.
+ * ============================================================================
+ */
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /* [_base] ---------------------------------------------------------------
