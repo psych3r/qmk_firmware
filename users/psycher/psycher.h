@@ -25,6 +25,7 @@ enum my_layers {
 enum custom_keycodes {
     MT_TMUXPRE = SAFE_RANGE,
     PASS_MACRO,
+    OS_TERMINATE,
     DYNAMIC_MACRO_RANGE // should be last
 };
 

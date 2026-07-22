@@ -23,6 +23,31 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record)
             if (record->event.pressed)
                 SEND_STRING("L3tm3inbia55@12\n"/* SS_TAP(X_ENT)*/);
             break;
+        case OS_TERMINATE:
+            if (record->event.pressed) {
+                // Detect OS and send appropriate close command
+                switch (detected_host_os()) {
+                    case OS_MACOS:
+                    case OS_IOS:
+                        // Cmd+Q for macOS/iOS
+                        tap_code16(G(KC_Q));
+                        break;
+                    case OS_WINDOWS:
+                        // Alt+F4 for Windows
+                        tap_code16(LALT(KC_F4));
+                        break;
+                    case OS_LINUX:
+                        // Alt+F4 for Linux (most DEs use this)
+                        tap_code16(LALT(KC_F4));
+                        break;
+                    default:
+                        // Fallback to Alt+F4
+                        tap_code16(LALT(KC_F4));
+                        break;
+                }
+            }
+            // return false;
+            break;
         default:
             return true; // Process all other keycodes normally
     }
@@ -78,31 +103,3 @@ void keyboard_post_init_user(void)
         timeout_timer = timer_read(); // set inital time for ide timeout
     #endif
 }
-
-// dz
-// QK_GESC, KC_1,    KC_2,    KC_3,   KC_4,   KC_5,   KC_6,   KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC,
-// KC_TAB,  MODS,    HJKL,    KC_E,   KC_R,   KC_T,   KC_Y,   KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS,
-// TMUX,    GUIA,    ALTS,    CTLD,   SFTF,   KC_G,   KC_H,   SFTJ,    CTLK,    ALTL,    GUIN,    KC_QUOT, KC_ENT ,
-// SCAP,    KC_Z,    KC_X,    KC_C,   KC_V,   KC_B,   KC_N,   KC_M,    KC_COMM, KC_DOT,  KC_SLSH, UP__,
-// KC_LCTL, KC_LGUI, KC_LALT, KC_SPC, TERM,   LEFT,   DWNN,   RGHT
-
-
-// nk
-// QK_GESC, KC_1,    KC_2,    KC_3,   KC_4,   KC_5,   KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC, KC_DEL,
-// KC_TAB,  MODS,    HJKL,    KC_E,   KC_R,   KC_T,   KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS, KC_HOME,
-// TMUX,    GUIA,    ALTS,    CTLD,   SFTF,   KC_G,   KC_H,    SFTJ,    CTLK,    ALTL,    KC_SCLN, KC_QUOT, KC_ENT,  KC_END,
-// KC_LSFT, KC_Z,    KC_X,    KC_C,   KC_V,   KC_B,   KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT, KC_UP,   TT(_hjkl),
-// KC_LCTL, KC_LGUI, KC_LALT, KC_SPC, TERM,   TT(_vrgb),  KC_RCTL, KC_LEFT, KC_DOWN, KC_RGHT
-
-// 67
-// QK_GESC, KC_1,    KC_2,    KC_3,   KC_4,   KC_5,   KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC, KC_DEL,
-// KC_TAB,  MODS,    HJKL,    KC_E,   KC_R,   KC_T,   KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS, KC_HOME,
-// TMUX,    GUIA,    ALTS,    CTLD,   SFTF,   KC_G,   KC_H,    SFTJ,    CTLK,    ALTL,    GUIN,    KC_QUOT,          KC_ENT,  KC_END,
-// SCAP,    KC_Z,    KC_X,    KC_C,   KC_V,   KC_B,   KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,          KC_RSFT, KC_UP,   TT(_hjkl),
-// KC_LCTL, KC_LGUI, KC_LALT,                         KC_SPC,                  TT(_vrgb), KC_RCTL,          KC_LEFT, KC_DOWN, KC_RGHT
-
-
-
-
-
-

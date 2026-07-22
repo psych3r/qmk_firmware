@@ -4,10 +4,95 @@
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
+    /* [_base] ---------------------------------------------------------------
+     * ,-----------------------------------------------------------------------.
+     * |GESC|  1|  2|  3|  4|  5|  6|  7|  8|  9|  0|MINS| EQL|   BSPC          |
+     * |-----------------------------------------------------------------------|
+     * |TAB   |MODS|HJKL|  E|  R|  T|  Y|  U|  I|  O|  P|LBRC|RBRC|    BSLS     |
+     * |-----------------------------------------------------------------------|
+     * |TMUX   |GUIA|ALTS|CTLD|SFTF|  G|  H|SFTJ|CTLK|ALTL|GUIN|QUOT|    ENT    |
+     * |-----------------------------------------------------------------------|
+     * |SCAP    |  Z|  X|  C|  V|  B|  N|  M|COMM| DOT|SLSH| UP_|  TT(_hjkl)   |
+     * |-----------------------------------------------------------------------|
+     * |LCTL|LGUI|LALT|          SPC          |TERM|VRGB(TT)|LEFT|DWNN|RGHT    |
+     * `-----------------------------------------------------------------------'
+     * Notes: MODS/HJKL/TMUX/GUIA/ALTS/CTLD/SFTF/SFTJ/CTLK/ALTL/GUIN/SCAP/TERM/
+     *        UP_/DWNN are custom keycodes defined in psycher.h (home-row mods,
+     *        tap-dance, tmux leader, etc). TT(_hjkl) on split-rshift key.
+     */
     [_base] = LAYOUT_wrapper(LAYOUT_60_ansi_split_rshift, _BASE_ROW1, _BASE_ROW2, _BASE_ROW3, _BASE_ROW4_60_split_rshft, _BASE_ROW5_60),
+
+    /* [_game] ---------------------------------------------------------------
+     * ,-----------------------------------------------------------------------.
+     * |GESC|  1|  2|  3|  4|  5|  6|  7|  8|  9|  0|MINS| EQL|   BSPC          |
+     * |-----------------------------------------------------------------------|
+     * |TAB   |  Q|  W|  E|  R|  T|  Y|  U|  I|  O|  P|LBRC|RBRC|    BSLS      |
+     * |-----------------------------------------------------------------------|
+     * |CAPS   |  A|  S|  D|  F|  G|  H|  J|  K|  L|SCLN|QUOT|    ENT          |
+     * |-----------------------------------------------------------------------|
+     * |LSFT    |  Z|  X|  C|  V|  B|  N|  M|COMM| DOT|SLSH|RSFT|  DF(_base)   |
+     * |-----------------------------------------------------------------------|
+     * |LCTL|LGUI|LALT|          SPC          |RALT|TT(_vrgb)|RCTL| DF(_base)  |
+     * `-----------------------------------------------------------------------'
+     * Notes: plain QWERTY (no home-row mods) for gaming. DF(_base) on both the
+     *        split-rshift key and bottom-right key lets you bail back to _base
+     *        from either spot. TT(_vrgb) still reachable bottom-right area.
+     */
     [_game] = LAYOUT_wrapper(LAYOUT_60_ansi_split_rshift, _GAME_ROW1, _GAME_ROW2, _GAME_ROW3, _GAME_ROW4_60_split_rshft, _GAME_ROW5_60),
+
+    /* [_vrgb] (FN1: F-keys, media & RGB) --------------------------------------
+     * ,-----------------------------------------------------------------------.
+     * |PWR | F1| F2| F3| F4| F5| F6| F7| F8| F9|F10|F11 | F12|   DEL           |
+     * |-----------------------------------------------------------------------|
+     * |RGBTOG|xxx|SATU|xxx|xxx|xxx|xxx|xxx|xxx|xxx|MPLY|PREV|NEXT|   QK_BOOT   |
+     * |-----------------------------------------------------------------------|
+     * |CAPS   |HUED|SATD|HUEU|xxx|xxx|SPDD|VALD|VALU|SPDU|xxx|xxx|   xxx       |
+     * |-----------------------------------------------------------------------|
+     * |xxx     |xxx|xxx|xxx|xxx|xxx|xxx|MUTE|MPRV|MNXT|TG(_game)|VOLU|MUTE    |
+     * |-----------------------------------------------------------------------|
+     * |xxx |xxx |xxx |          xxx          |xxx |xxx     |BRID|VOLD|BRIU   |
+     * `-----------------------------------------------------------------------'
+     * Notes: xxx = _______ (transparent, falls through to _base/_game).
+     *        WASD/hjkl area not remapped here — only the labeled RGB/media keys
+     *        listed above are active on this layer. Access via TT(_vrgb) held
+     *        or double-tapped from _base/_game.
+     */
     [_vrgb] = LAYOUT_wrapper(LAYOUT_60_ansi_split_rshift, _VRGB_ROW1, _VRGB_ROW2, _VRGB_ROW3, _VRGB_ROW4_60_split_rshft, _VRGB_ROW5_60),
+
+    /* [_hjkl] (FN2: arrow-cluster on hold-W) -----------------------------------
+     * ,-----------------------------------------------------------------------.
+     * |xxx |xxx|xxx|xxx|xxx|xxx|xxx|xxx|xxx|xxx|xxx|xxx |xxx |   xxx           |
+     * |-----------------------------------------------------------------------|
+     * |xxx   |xxx|xxx|xxx|xxx|xxx|xxx|xxx|xxx|xxx|xxx|xxx|xxx|    xxx         |
+     * |-----------------------------------------------------------------------|
+     * |xxx    |xxx|xxx|xxx|xxx|xxx|LEFT|DOWN|UP|RIGHT|PASS_MACRO|xxx|  xxx    |
+     * |-----------------------------------------------------------------------|
+     * |xxx     |xxx|xxx|xxx|xxx|xxx|xxx|xxx|xxx|xxx|xxx|xxx|      xxx        |
+     * |-----------------------------------------------------------------------|
+     * |xxx |xxx |xxx |          xxx          |xxx |xxx     |xxx |xxx |xxx    |
+     * `-----------------------------------------------------------------------'
+     * Notes: xxx = _______. Only the home-row-ish HJKL cluster (mapped to
+     *        LEFT/DOWN/UP/RIGHT) and ; (PASS_MACRO) are live. TODO in file
+     *        flags this as not ideal — meant to be a typing aux layer on
+     *        holding W only, currently reached via FN2 more broadly.
+     */
     [_hjkl] = LAYOUT_wrapper(LAYOUT_60_ansi_split_rshift, _HJKL_ROW1, _HJKL_ROW2, _HJKL_ROW3, _HJKL_ROW4_60_split_rshft, _HJKL_ROW5),
+
+    /* [_mods] (FN: hold-Q editing keys) ----------------------------------------
+     * ,-----------------------------------------------------------------------.
+     * |xxx |xxx|xxx|xxx|xxx|xxx|xxx|xxx|xxx|xxx|xxx|xxx |xxx |   xxx           |
+     * |-----------------------------------------------------------------------|
+     * |xxx   |xxx|xxx|xxx|xxx|xxx|xxx|xxx|xxx|xxx|xxx|xxx|xxx|    xxx         |
+     * |-----------------------------------------------------------------------|
+     * |xxx    |xxx|xxx|xxx|xxx|xxx|BSPC|END|HOME|DEL|ENT|xxx|  xxx            |
+     * |-----------------------------------------------------------------------|
+     * |xxx     |xxx|xxx|xxx|xxx|xxx|xxx|xxx|xxx|xxx|xxx|xxx|      xxx        |
+     * |-----------------------------------------------------------------------|
+     * |xxx |xxx |xxx |          xxx          |xxx |xxx     |xxx |xxx |xxx    |
+     * `-----------------------------------------------------------------------'
+     * Notes: xxx = _______. Only HJKL; row remapped to BSPC/END/HOME/DEL/ENT —
+     *        an editing cluster accessed by holding Q.
+     */
     [_mods] = LAYOUT_wrapper(LAYOUT_60_ansi_split_rshift, _MODS_ROW1, _MODS_ROW2, _MODS_ROW3, _MODS_ROW4_60_split_rshft, _MODS_ROW5),
 
     // [0] = LAYOUT_wired(
