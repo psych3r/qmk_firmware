@@ -1,6 +1,9 @@
 /* TODO
-   [] remove all DF(_base) and DF(_game) and replace with TG(_game)
+   [X] remove all DF(_base) and DF(_game) and replace with TG(_game)
+        - DF(_base) is not needed, as _base is the default layer
+          The correct way to switch between _base and _game is to use TG(_game) to switch it off!
    [] HJKL layer as FN2 is not ideal, should be a typing auxilary layer on kc_w only!
+   [] Don't need TG(_game) on game bottom most right most key. (dz concern i guess)
    [] Numpad layer?
 */
 
@@ -42,12 +45,12 @@
 #define _GAME_ROW1_65      _GAME_ROW1, KC_DEL
 #define _GAME_ROW2_65      _GAME_ROW2, KC_HOME
 #define _GAME_ROW3_65      _GAME_ROW3, KC_END
-#define _GAME_ROW4_65      _GAME_ROW4, KC_UP,   DF(_base)
+#define _GAME_ROW4_65      _GAME_ROW4, KC_UP,   TG(_game)
 #define _GAME_ROW5_65_3mod _GAME_ROW5, KC_RCTL, KC_LEFT, KC_DOWN, KC_RGHT
 #define _GAME_ROW5_65_2mod _GAME_ROW5,          KC_LEFT, KC_DOWN, KC_RGHT
 
-#define _GAME_ROW4_60_split_rshft _GAME_ROW4, DF(_base)
-#define _GAME_ROW5_60             _GAME_ROW5, KC_RCTL, DF(_base)
+#define _GAME_ROW4_60_split_rshft _GAME_ROW4, TG(_game)
+#define _GAME_ROW5_60             _GAME_ROW5, KC_RCTL, TG(_game)
 
 // ============================================================================
 // LAYER: _vrgb
