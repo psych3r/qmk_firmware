@@ -70,6 +70,20 @@
  * ============================================================================
  */
 
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record)
+{
+    switch (keycode) {
+        case GUIA: return TAPPING_TERM + 50; break;
+        case ALTS: return TAPPING_TERM + 90; break;
+        case CTLD: return TAPPING_TERM + 50; break;
+        case SFTF: return TAPPING_TERM + 30; break;
+        case SFTJ: return TAPPING_TERM - 10; break;
+        case GUIN: return TAPPING_TERM + 50; break;
+        case HJKL: return TAPPING_TERM + 30; break;
+        default:   return TAPPING_TERM;
+    }
+}
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /* [_base] ---------------------------------------------------------------

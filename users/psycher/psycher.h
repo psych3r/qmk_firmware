@@ -74,3 +74,5 @@ enum custom_keycodes {
     void timeout_update_threshold(bool increase);
     void timeout_tick_timer(void);
 #endif  //IDLE_TIMEOUT_ENABLE
+
+void do_os_terminate(void);

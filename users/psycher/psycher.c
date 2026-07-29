@@ -25,26 +25,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record)
             break;
         case OS_TERMINATE:
             if (record->event.pressed) {
-                // Detect OS and send appropriate close command
-                switch (detected_host_os()) {
-                    case OS_MACOS:
-                    case OS_IOS:
-                        // Cmd+Q for macOS/iOS
-                        tap_code16(G(KC_Q));
-                        break;
-                    case OS_WINDOWS:
-                        // Alt+F4 for Windows
-                        tap_code16(LALT(KC_F4));
-                        break;
-                    case OS_LINUX:
-                        // Alt+F4 for Linux (most DEs use this)
-                        tap_code16(LALT(KC_F4));
-                        break;
-                    default:
-                        // Fallback to Alt+F4
-                        tap_code16(LALT(KC_F4));
-                        break;
-                }
+                do_os_terminate();
             }
             return false;
             break;
@@ -102,4 +83,19 @@ void keyboard_post_init_user(void)
     #ifdef IDLE_TIMEOUT_ENABLE
         timeout_timer = timer_read(); // set inital time for ide timeout
     #endif
+}
+
+// shared helper — actually performs the OS-aware "close app" action
+void do_os_terminate(void) {
+    switch (detected_host_os()) {
+        case OS_MACOS:
+        case OS_IOS:
+            tap_code16(G(KC_Q));       // Cmd+Q
+            break;
+        case OS_WINDOWS:
+        case OS_LINUX:
+        default:
+            tap_code16(LALT(KC_F4));   // Alt+F4
+            break;
+    }
 }

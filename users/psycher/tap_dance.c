@@ -41,9 +41,8 @@ static td_tap_t terminator_td_state = { .is_press_action = true, .state = TD_NON
 void terminator_finished(tap_dance_state_t *state, void *user_data) {
     terminator_td_state.state = cur_dance(state);
     switch (terminator_td_state.state) {
-        // case TD_SINGLE_TAP:  register_code16(LALT(KC_F4));  break;
-        case TD_SINGLE_TAP:  register_code16(OS_TERMINATE);  break;
-        case TD_SINGLE_HOLD: register_code(KC_RALT);        break;
+        case TD_SINGLE_TAP:  do_os_terminate();             break;
+        case TD_SINGLE_HOLD: layer_on(_vrgb);               break;
         case TD_DOUBLE_TAP:  register_code16(RSFT(KC_DEL)); break;
         case TD_DOUBLE_HOLD: register_code(KC_RALT);        break;
         case TD_TRIPLE_TAP:  register_code16(LCA(KC_DEL));  break;
@@ -57,9 +56,8 @@ void terminator_finished(tap_dance_state_t *state, void *user_data) {
 
 void terminator_reset(tap_dance_state_t *state, void *user_data) {
     switch (terminator_td_state.state) {
-        case TD_SINGLE_TAP:  unregister_code16(OS_TERMINATE);  break;
-        // case TD_SINGLE_TAP:  unregister_code16(LALT(KC_F4));  break;
-        case TD_SINGLE_HOLD: unregister_code(KC_RALT);        break;
+        case TD_SINGLE_TAP:                                   break;
+        case TD_SINGLE_HOLD: layer_off(_vrgb);                break;
         case TD_DOUBLE_TAP:  unregister_code16(RSFT(KC_DEL)); break;
         case TD_DOUBLE_HOLD: unregister_code(KC_RALT);        break;
         case TD_TRIPLE_TAP:  unregister_code16(LCA(KC_DEL));  break;
